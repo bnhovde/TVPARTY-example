@@ -7,6 +7,7 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "arrow-parens": [2, "always"]
   }
 }
