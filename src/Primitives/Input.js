@@ -6,16 +6,14 @@ import media from '../utilities/breakpoints';
 const { fontSizes, colors, gutter } = variables;
 
 const Input = styled.input`
-  font-size: ${fontSizes.text.small};
-  font-weight: 100;
+  width: 100%;
   color: ${colors.text};
   margin: 0;
-  line-height: 1.4;
-  ${media.teen`
-    font-size: ${fontSizes.text.large};
-  `} & > p {
-    margin-bottom: ${gutter.fixed / 2}rem;
-  }
+  padding: 0 ${gutter.horizontal / 2}vw;
+  line-height: 3rem;
+  font-size: ${fontSizes.text.tiny};
+  background: white;
+  border: 0;
 `;
 
 export { Input };

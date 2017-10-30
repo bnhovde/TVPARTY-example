@@ -1,12 +1,33 @@
 import React from 'react';
 
 import styled from 'styled-components';
-// import variables from './../../constants/variables';
+import variables from './../../constants/variables';
 
-// const { colors, fontSizes } = variables;
+const { gutter, colors } = variables;
 
 const Wrapper = styled.div`
+  position: relative;
   display: block;
+  background: ${colors.bg};
+`;
+
+const Arrow = styled.div`
+  position: absolute;
+  top: 50%;
+  right: ${gutter.horizontal / 2}vw;
+  transform: translateY(-50%);
+`;
+
+const SelectEl = styled.select`
+  width: 100%;
+  line-height: 3rem;
+  padding: 0 ${gutter.horizontal / 2}vw;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
 `;
 
 function Select(props) {
@@ -14,7 +35,8 @@ function Select(props) {
 
   return (
     <Wrapper>
-      <select
+      <Arrow>&darr;</Arrow>
+      <SelectEl
         value={selected}
         onChange={({ target }) => {
           onChange(name, target.value);
@@ -25,7 +47,7 @@ function Select(props) {
             {option.name}
           </option>
         ))}
-      </select>
+      </SelectEl>
     </Wrapper>
   );
 }

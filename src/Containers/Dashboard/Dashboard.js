@@ -34,9 +34,10 @@ class Dashboard extends React.Component {
   }
 
   onSubmit() {
-    // Check that room exists, and that username is available
-    this.props.welcomeMessage(this.state.fields.userName);
-    this.props.startGame(this.state.fields.roomCode);
+    const { roomCode, userName } = this.state.fields;
+    // TO-DO: Check that room exists, and that username is available
+    this.props.welcomeMessage(userName);
+    this.props.startGame(roomCode);
   }
 
   startNewGame() {
@@ -64,9 +65,11 @@ class Dashboard extends React.Component {
     return (
       <Screen>
         <H1>TVPARTY</H1>
+
         <Block top={1}>
           <p>See you at the party richter!</p>
         </Block>
+
         <Block top={1}>
           <Select
             name="selectedGame"
@@ -75,15 +78,19 @@ class Dashboard extends React.Component {
             onChange={this.handleChange}
           />
         </Block>
-        <Block top={1}>
+
+        <Block top={0.5}>
           <Button onClick={() => this.startNewGame()}>Start new game</Button>
         </Block>
-        <Block top={0.5} align="center">
-          <p>OR</p>
+
+        <Block top={1} align="center">
+          <p>– OR –</p>
         </Block>
-        <Block top={0.5}>
+
+        <Block top={1}>
           <Button onClick={() => this.joinGame()}>Join existing game</Button>
         </Block>
+
         <Drawer visible={this.state.overlayVisible}>
           <JoinGameForm
             roomCode={roomCode}
@@ -99,7 +106,7 @@ class Dashboard extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    startGame: roomCode => dispatch(push(`/game/letsdrink/${roomCode}`)),
+    startGame: roomCode => dispatch(push(`/game/${roomCode}`)),
     welcomeMessage: name =>
       dispatch(playAudio(`${name} has joined the game! Tight!`)),
   };
