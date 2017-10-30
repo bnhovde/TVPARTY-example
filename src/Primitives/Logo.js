@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router';
 
-import settings from '../utilities/settings';
+import settings from './../constants/settings';
 import media from '../utilities/breakpoints';
 
 const {

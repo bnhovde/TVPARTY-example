@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import settings from './settings';
+import settings from './../constants/settings';
 
 const sizes = {
   elder: settings.breakpoints.elder,

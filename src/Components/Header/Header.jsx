@@ -7,8 +7,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import settings from '../../utilities/settings';
-import { Container } from 'rui-components';
+import settings from './../../constants/settings';
 
 import { Logo } from '../../Primitives/Logo';
 

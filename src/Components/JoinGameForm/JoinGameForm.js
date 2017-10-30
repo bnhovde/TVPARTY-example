@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import settings from '../../utilities/settings';
+import settings from './../../constants/settings';
 
 import { H1 } from '../../Primitives/H';
 import { Input } from '../../Primitives/Input';

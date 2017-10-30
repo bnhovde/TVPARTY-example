@@ -21,8 +21,13 @@ class Dashboard extends React.Component {
     };
   }
 
+  onSubmit() {
+    // Check that room exists, and that username is available
+    this.props.welcomeMessage(this.state.fields.userName);
+    this.props.startGame(this.state.fields.roomCode);
+  }
+
   startNewGame() {
-    console.log('test');
     const roomCode = generateRoomCode();
     this.props.startGame(roomCode);
   }
@@ -65,8 +70,9 @@ class Dashboard extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    startGame: roomCode => dispatch(push(`/game/${roomCode}`)),
-    welcomeMessage: name => dispatch(playAudio(name)),
+    startGame: roomCode => dispatch(push(`/game/letsdrink/${roomCode}`)),
+    welcomeMessage: name =>
+      dispatch(playAudio(`${name} has joined the game! Tight!`)),
   };
 }
 

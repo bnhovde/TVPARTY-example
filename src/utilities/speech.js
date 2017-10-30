@@ -14,3 +14,6 @@ const stop = function stop() {
 };
 
 export { play, stop };
+
+// const msg = new SpeechSynthesisUtterance("Oh shit! It's goggen.");
+// const msg = new SpeechSynthesisUtterance("Goggen takes 340 of Nilses points.");

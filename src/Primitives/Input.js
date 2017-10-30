@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import settings from '../utilities/settings';
+import settings from './../constants/settings';
 import media from '../utilities/breakpoints';
 
 const { fontSizes, colors, gutter } = settings;
