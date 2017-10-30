@@ -8,6 +8,10 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
     "prettier/prettier": "error",
-    "arrow-parens": [2, "always"]
+    "arrow-parens": 0,
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }]
   }
 }

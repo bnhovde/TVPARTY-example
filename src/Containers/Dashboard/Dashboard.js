@@ -2,11 +2,22 @@ import React from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
+
+// Redux
 import { playAudio } from './../../store/audio';
+
+// Helpers
 import { generateRoomCode } from './../../utilities/helpers';
-import { Button } from './../../Primitives/Button';
+import games from './../../constants/games';
+
+// Components
 import JoinGameForm from './../../Components/JoinGameForm';
 import Drawer from './../../Components/Drawer';
+import Select from './../../Components/Select';
+import { H1 } from './../../Primitives/H';
+import { Button } from './../../Primitives/Button';
+import Block from './../../Primitives/Block';
+import Screen from './../../Primitives/Screen';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -14,6 +25,7 @@ class Dashboard extends React.Component {
     autoBind(this);
     this.state = {
       fields: {
+        selectedGame: '',
         roomCode: '',
         userName: '',
       },
@@ -47,14 +59,31 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { roomCode, userName } = this.state.fields;
+    const { roomCode, userName, selectedGame } = this.state.fields;
 
     return (
-      <div>
-        <h1>Dashboard</h1>
-        <p>Welcome!!</p>
-        <Button onClick={() => this.startNewGame()}>Start new game</Button>
-        <Button onClick={() => this.joinGame()}>Join existing game</Button>
+      <Screen>
+        <H1>TVPARTY</H1>
+        <Block top={1}>
+          <p>See you at the party richter!</p>
+        </Block>
+        <Block top={1}>
+          <Select
+            name="selectedGame"
+            items={games}
+            selected={selectedGame}
+            onChange={this.handleChange}
+          />
+        </Block>
+        <Block top={1}>
+          <Button onClick={() => this.startNewGame()}>Start new game</Button>
+        </Block>
+        <Block top={0.5} align="center">
+          <p>OR</p>
+        </Block>
+        <Block top={0.5}>
+          <Button onClick={() => this.joinGame()}>Join existing game</Button>
+        </Block>
         <Drawer visible={this.state.overlayVisible}>
           <JoinGameForm
             roomCode={roomCode}
@@ -63,7 +92,7 @@ class Dashboard extends React.Component {
             onSubmit={this.onSubmit}
           />
         </Drawer>
-      </div>
+      </Screen>
     );
   }
 }

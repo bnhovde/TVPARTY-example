@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { Link } from 'react-router';
 
-import settings from './../constants/settings';
+import variables from './../constants/variables';
 import media from '../utilities/breakpoints';
 
 const {
   fontSizes,
-} = settings;
+} = variables;
 
 const Logo = styled(Link)`
   font-size: ${fontSizes.logo.small};

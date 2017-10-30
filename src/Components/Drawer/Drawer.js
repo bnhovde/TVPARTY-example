@@ -6,9 +6,9 @@
 */
 import React from 'react';
 import styled from 'styled-components';
-import settings from './../../constants/settings';
+import variables from './../../constants/variables';
 
-const { colors } = settings;
+const { colors } = variables;
 
 const DrawerWrapper = styled.div`
   position: fixed;

@@ -6,9 +6,9 @@
 */
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import settings from './../../constants/settings';
+import variables from './../../constants/variables';
 
-const { colors } = settings;
+const { colors } = variables;
 
 const Wrapper = styled.div`
   position: fixed;

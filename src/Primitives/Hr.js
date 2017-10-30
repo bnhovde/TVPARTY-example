@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-import settings from './../constants/settings';
+import variables from './../constants/variables';
 
 const {
   colors,
-} = settings;
+} = variables;
 
 const Hr = styled.hr`
   display: block;

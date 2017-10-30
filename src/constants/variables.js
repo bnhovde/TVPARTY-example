@@ -1,7 +1,7 @@
 export default {
   gutter: {
-    fluid: 5,
-    fixed: 2,
+    vertical: 5,
+    horizontal: 5,
   },
   breakpoints: {
     elder: 1470,
@@ -28,8 +28,8 @@ export default {
       large: '2.5rem',
     },
     h1: {
-      small: '1rem',
-      large: '1.5rem',
+      small: '1.5rem',
+      large: '2rem',
     },
     h2: {
       small: '.8rem',

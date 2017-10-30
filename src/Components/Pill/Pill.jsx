@@ -6,11 +6,11 @@
 */
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
-import settings from './../../constants/settings';
+import variables from './../../constants/variables';
 
 const {
   colors,
-} = settings;
+} = variables;
 
 const Wrapper = styled.span`
   display: inline-block;

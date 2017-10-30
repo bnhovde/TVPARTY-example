@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import settings from './../constants/settings';
+import variables from './../constants/variables';
 import media from '../utilities/breakpoints';
 
 const {
   fontSizes,
   colors,
   gutter,
-} = settings;
+} = variables;
 
 const TextArea = styled.div`
   font-size: ${fontSizes.text.small};

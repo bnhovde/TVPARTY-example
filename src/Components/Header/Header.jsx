@@ -7,11 +7,11 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import settings from './../../constants/settings';
+import variables from './../../constants/variables';
 
 import { Logo } from '../../Primitives/Logo';
 
-const { colors } = settings;
+const { colors } = variables;
 
 const Wrapper = styled.header`
   background-color: ${colors.primary};

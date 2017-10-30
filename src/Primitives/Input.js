@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import settings from './../constants/settings';
+import variables from './../constants/variables';
 import media from '../utilities/breakpoints';
 
-const { fontSizes, colors, gutter } = settings;
+const { fontSizes, colors, gutter } = variables;
 
 const Input = styled.input`
   font-size: ${fontSizes.text.small};

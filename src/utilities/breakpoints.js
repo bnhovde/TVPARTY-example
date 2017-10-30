@@ -1,12 +1,12 @@
 import { css } from 'styled-components';
-import settings from './../constants/settings';
+import variables from './../constants/variables';
 
 const sizes = {
-  elder: settings.breakpoints.elder,
-  adult: settings.breakpoints.adult,
-  teen: settings.breakpoints.teen,
-  child: settings.breakpoints.child,
-  baby: settings.breakpoints.baby,
+  elder: variables.breakpoints.elder,
+  adult: variables.breakpoints.adult,
+  teen: variables.breakpoints.teen,
+  child: variables.breakpoints.child,
+  baby: variables.breakpoints.baby,
 };
 
 // iterate through the sizes and create a media template
