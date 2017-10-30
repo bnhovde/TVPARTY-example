@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import rooms from './rooms/';
+import games from './games/';
 import users from './users/';
 
 export default combineReducers({
   routing: routerReducer,
-  rooms,
+  games,
   users,
 });

@@ -5,6 +5,7 @@ import autoBind from 'react-autobind';
 
 // Redux
 import { playAudio } from './../../store/audio';
+import { createGame } from './../../store/games';
 
 // Helpers
 import { generateRoomCode } from './../../utilities/helpers';
@@ -33,7 +34,7 @@ class Dashboard extends React.Component {
     };
   }
 
-  onSubmit() {
+  handleJoinGame() {
     const { roomCode, userName } = this.state.fields;
     // TO-DO: Check that room exists, and that username is available
     this.props.welcomeMessage(userName);
@@ -42,6 +43,7 @@ class Dashboard extends React.Component {
 
   startNewGame() {
     const roomCode = generateRoomCode();
+    this.props.createGame(roomCode);
     this.props.startGame(roomCode);
   }
 
@@ -96,7 +98,7 @@ class Dashboard extends React.Component {
             roomCode={roomCode}
             userName={userName}
             onChange={this.handleChange}
-            onSubmit={this.onSubmit}
+            onSubmit={this.handleJoinGame}
           />
         </Drawer>
       </Screen>
@@ -106,6 +108,7 @@ class Dashboard extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
+    createGame: roomCode => dispatch(createGame(roomCode)),
     startGame: roomCode => dispatch(push(`/game/${roomCode}`)),
     welcomeMessage: name =>
       dispatch(playAudio(`${name} has joined the game! Tight!`)),
