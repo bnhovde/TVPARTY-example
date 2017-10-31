@@ -40,6 +40,7 @@ export default {
     primary: '#171D1C',
     secondary: '#00AC65',
     third: '#068894',
+    bad: '#e91e63',
     bg: '#f1f1f1',
     text: '#171D1C',
     textWeak: '#989898',

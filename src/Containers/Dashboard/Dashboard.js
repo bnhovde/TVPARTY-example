@@ -5,16 +5,16 @@ import autoBind from 'react-autobind';
 
 // Redux
 import { playAudio } from './../../store/audio';
-import { createGame } from './../../store/games';
+import { newGame } from './../../store/games';
 
 // Helpers
-import { generateRoomCode } from './../../utilities/helpers';
+import { generateGameCode } from './../../utilities/helpers';
 import games from './../../constants/games';
 
 // Components
 import JoinGameForm from './../../Components/JoinGameForm';
 import Drawer from './../../Components/Drawer';
-import Select from './../../Components/Select';
+import Toggle from './../../Components/Toggle';
 import { H1 } from './../../Primitives/H';
 import { Button } from './../../Primitives/Button';
 import Block from './../../Primitives/Block';
@@ -26,8 +26,8 @@ class Dashboard extends React.Component {
     autoBind(this);
     this.state = {
       fields: {
-        selectedGame: '',
-        roomCode: '',
+        gameType: games[0].id,
+        gameCode: '',
         userName: '',
       },
       overlayVisible: false,
@@ -35,16 +35,19 @@ class Dashboard extends React.Component {
   }
 
   handleJoinGame() {
-    const { roomCode, userName } = this.state.fields;
-    // TO-DO: Check that room exists, and that username is available
+    const { gameCode, userName } = this.state.fields;
+    // TO-DO: Check that game exists, and that username is available
     this.props.welcomeMessage(userName);
-    this.props.startGame(roomCode);
+    this.props.startGame(gameCode);
   }
 
   startNewGame() {
-    const roomCode = generateRoomCode();
-    this.props.createGame(roomCode);
-    this.props.startGame(roomCode);
+    const { gameType } = this.state.fields;
+    const gameCode = generateGameCode();
+    this.props.newGame(gameCode, gameType).then(() => {
+      console.log('test!');
+    });
+    // this.props.startGame(gameCode);
   }
 
   handleChange(key, value) {
@@ -55,6 +58,13 @@ class Dashboard extends React.Component {
     });
   }
 
+  handleCancel(e) {
+    e.preventDefault();
+    this.setState({
+      overlayVisible: false,
+    });
+  }
+
   joinGame() {
     this.setState({
       overlayVisible: true,
@@ -62,26 +72,26 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { roomCode, userName, selectedGame } = this.state.fields;
+    const { gameCode, userName, gameType } = this.state.fields;
 
     return (
       <Screen>
         <H1>TVPARTY</H1>
 
         <Block top={1}>
-          <p>See you at the party richter!</p>
+          <p>Choose a game:</p>
         </Block>
 
         <Block top={1}>
-          <Select
-            name="selectedGame"
+          <Toggle
+            name="gameType"
             items={games}
-            selected={selectedGame}
+            selected={gameType}
             onChange={this.handleChange}
           />
         </Block>
 
-        <Block top={0.5}>
+        <Block top={1}>
           <Button onClick={() => this.startNewGame()}>Start new game</Button>
         </Block>
 
@@ -95,10 +105,11 @@ class Dashboard extends React.Component {
 
         <Drawer visible={this.state.overlayVisible}>
           <JoinGameForm
-            roomCode={roomCode}
+            gameCode={gameCode}
             userName={userName}
             onChange={this.handleChange}
             onSubmit={this.handleJoinGame}
+            onCancel={this.handleCancel}
           />
         </Drawer>
       </Screen>
@@ -108,8 +119,8 @@ class Dashboard extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    createGame: roomCode => dispatch(createGame(roomCode)),
-    startGame: roomCode => dispatch(push(`/game/${roomCode}`)),
+    newGame: (gameCode, gameType) => dispatch(newGame(gameCode, gameType)),
+    startGame: gameCode => dispatch(push(`/game/${gameCode}`)),
     welcomeMessage: name =>
       dispatch(playAudio(`${name} has joined the game! Tight!`)),
   };

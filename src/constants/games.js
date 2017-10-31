@@ -2,11 +2,15 @@ export default [
   {
     id: 'letsDrink',
     name: "Let's drink!",
-    test: true,
+    assets: 'LetsDrink',
+    logo: 'logo.svg',
+    active: true,
   },
   {
-    id: 'testGame',
-    name: 'Test game',
-    test: true,
+    id: 'exampleGame',
+    name: 'Example game',
+    assets: 'exampleGame',
+    logo: 'logo.svg',
+    active: true,
   },
 ];

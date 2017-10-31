@@ -1,4 +1,4 @@
-const generateRoomCode = function generateRoomCode() {
+const generateGameCode = function generateGameCode() {
   const list = 'ABCDEFGHIJKLMNPQRSTUVWXY';
   let res = '';
   for (let i = 0; i < 4; i += 1) {
@@ -8,4 +8,4 @@ const generateRoomCode = function generateRoomCode() {
   return res;
 };
 
-export { generateRoomCode };
+export { generateGameCode };

@@ -3,8 +3,6 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 import { playAudio } from './../../store/audio';
-import { generateRoomCode } from './../../utilities/helpers';
-import { Button } from './../../Primitives/Button';
 import Loader from './../../Components/Loader';
 
 class LetsDrink extends React.Component {
@@ -18,7 +16,7 @@ class LetsDrink extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData(this.props.match.params.roomCode);
+    this.fetchData(this.props.match.params.gameCode);
   }
 
   fetchData(slug) {
@@ -58,7 +56,7 @@ class LetsDrink extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    startGame: roomCode => dispatch(push(`/game/${roomCode}`)),
+    startGame: gameCode => dispatch(push(`/game/${gameCode}`)),
     welcomeMessage: name => dispatch(playAudio(name)),
   };
 }

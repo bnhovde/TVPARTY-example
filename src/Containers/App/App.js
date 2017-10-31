@@ -7,7 +7,7 @@ const App = () => (
   <div>
     <main>
       <Route exact path="/" component={Dashboard} />
-      <Route path="/game/:roomKey" component={Game} />
+      <Route path="/game/:gameCode" component={Game} />
     </main>
   </div>
 );

@@ -1,45 +1,52 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import React from 'react';
 
 import styled from 'styled-components';
 import variables from './../../constants/variables';
-import media from '../../utilities/breakpoints';
 
-const { colors, fontSizes } = variables;
+const { gutter, fontSizes } = variables;
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
 `;
 
-const ToggleButton = styled(Link)`
-  color: ${props => (props.isActive ? colors.primary : colors.secondary)};
-  font-size: ${fontSizes.text.large};
-  text-transform: uppercase;
-  letter-spacing: -0.5px;
+const ToggleButton = styled.button`
+  display: block;
+  margin-right: ${gutter.horizontal / 2}vw;
   cursor: pointer;
-  border-bottom: 1px solid currentColor;
-  border-color: ${props => (props.isActive ? 'transparent' : 'currentColor')};
+  border: 0;
+  padding: 0;
+  transform: ${props => (props.active ? 'scale(1)' : 'scale(0.8)')};
+  transition: transform 0.3s ease;
+`;
+
+const Image = styled.img`
+  display: block;
+  width: 20vw;
+  margin-bottom: ${gutter.vertical / 4}vw;
 `;
 
 function Toggle(props) {
-  const { items, activeItem, handleClick } = props;
+  const { name, items, selected, onChange } = props;
 
   return (
-    <Wrapper>
+    <Wrapper id={`${name}-toggle`}>
       {items.map(item => (
-        <ToggleButton key={item.url} to={item.url}>
-          <span>{item.title}</span>
+        <ToggleButton
+          key={item.id}
+          active={item.id === selected}
+          onClick={() => {
+            onChange(name, item.id);
+          }}
+        >
+          <Image
+            alt={item.name}
+            src={`${process.env.PUBLIC_URL}/assets/${item.assets}/${item.logo}`}
+          />
+          <span>{item.name}</span>
         </ToggleButton>
       ))}
     </Wrapper>
   );
 }
-
-Toggle.propTypes = {
-  items: PropTypes.array,
-  handleClick: PropTypes.func,
-  activeItem: PropTypes.number,
-};
 
 export default Toggle;

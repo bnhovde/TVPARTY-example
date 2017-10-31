@@ -12,7 +12,7 @@ const Button = styled.button`
   text-transform: uppercase;
   letter-spacing: 1px;
   color: white;
-  background-color: ${colors.secondary};
+  background-color: ${props => (props.bad ? colors.bad : colors.secondary)};
 `;
 
 export { Button };

@@ -1,19 +1,18 @@
 // Services
-import firebase from './../../services/firebase';
+import { createGame } from './../../services/firebase';
 
 // Actions
-const CREATE_GAME_REQUEST = 'app/rooms/CREATE_GAME_REQUEST';
-const CREATE_GAME_SUCCESS = 'app/rooms/CREATE_GAME_SUCCESS';
-const CREATE_GAME_FAILURE = 'app/rooms/CREATE_GAME_FAILURE';
+const CREATE_GAME_REQUEST = 'app/games/CREATE_GAME_REQUEST';
+const CREATE_GAME_SUCCESS = 'app/games/CREATE_GAME_SUCCESS';
+const CREATE_GAME_FAILURE = 'app/games/CREATE_GAME_FAILURE';
 
 const initialState = {
-  items: {},
-  isReady: false,
-  apiError: false,
-  errorMessage: '',
+  data: [],
+  lastFetched: null,
+  isFetching: false,
 };
 
-const games = firebase.database().ref('games');
+// const games = firebase.database().ref('games');
 
 // Reducer
 export default function reducer(state = initialState, action) {
@@ -42,21 +41,29 @@ export default function reducer(state = initialState, action) {
 }
 
 // Action Creators
-export function CreateGameRequest() {
+export function createGameRequest() {
   return { type: CREATE_GAME_REQUEST };
 }
 
-export function CreateGameSuccess(game) {
+export function createGameSuccess(game) {
   return { type: CREATE_GAME_SUCCESS, game };
 }
 
-export function CreateGameFailure(error) {
+export function createGameFailure(error) {
   return { type: CREATE_GAME_FAILURE, error };
 }
 
 // Thunks
-export function createGame(gameData) {
-  return function() {
-    games.push(gameData);
+export function newGame(gameCode, gameType) {
+  return dispatch => {
+    dispatch(createGameRequest());
+    return createGame(gameCode, gameType)
+      .then(game => {
+        return dispatch(createGameSuccess(game));
+      })
+      .catch(error => {
+        dispatch(createGameFailure(error));
+        throw error;
+      });
   };
 }
