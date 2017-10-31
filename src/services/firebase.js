@@ -20,4 +20,11 @@ export function createGame(code, gameType) {
   });
 }
 
+export function fetchGames() {
+  return firebase
+    .database()
+    .ref('games')
+    .orderByKey();
+}
+
 export default firebase;

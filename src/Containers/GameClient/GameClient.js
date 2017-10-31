@@ -3,11 +3,9 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 import { playAudio } from './../../store/audio';
-import { generategameCode } from './../../utilities/helpers';
-import { Button } from './../../Primitives/Button';
 import Loader from './../../Components/Loader';
 
-class Game extends React.Component {
+class GameClient extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
@@ -63,4 +61,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(Game);
+export default connect(null, mapDispatchToProps)(GameClient);

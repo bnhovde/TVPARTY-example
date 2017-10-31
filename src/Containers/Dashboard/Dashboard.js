@@ -5,7 +5,7 @@ import autoBind from 'react-autobind';
 
 // Redux
 import { playAudio } from './../../store/audio';
-import { newGame } from './../../store/games';
+import { create } from './../../store/games';
 
 // Helpers
 import { generateGameCode } from './../../utilities/helpers';
@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
   startNewGame() {
     const { gameType } = this.state.fields;
     const gameCode = generateGameCode();
-    this.props.newGame(gameCode, gameType).then(() => {
+    this.props.createGame(gameCode, gameType).then(() => {
       this.props.startGame(gameCode);
     });
   }
@@ -118,8 +118,8 @@ class Dashboard extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    newGame: (gameCode, gameType) => dispatch(newGame(gameCode, gameType)),
-    startGame: gameCode => dispatch(push(`/game/${gameCode}`)),
+    createGame: (gameCode, gameType) => dispatch(create(gameCode, gameType)),
+    startGame: gameCode => dispatch(push(`/host/${gameCode}`)),
     welcomeMessage: name =>
       dispatch(playAudio(`${name} has joined the game! Tight!`)),
   };

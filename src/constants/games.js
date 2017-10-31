@@ -1,6 +1,7 @@
 export default [
   {
     id: 'letsDrink',
+    main: 'LetsDrink',
     name: "Let's drink!",
     assets: 'LetsDrink',
     logo: 'logo.svg',
@@ -8,6 +9,7 @@ export default [
   },
   {
     id: 'exampleGame',
+    main: 'ExampleGame',
     name: 'Example game',
     assets: 'exampleGame',
     logo: 'logo.svg',
