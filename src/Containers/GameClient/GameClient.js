@@ -2,7 +2,7 @@ import React from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
-import { playAudio } from './../../store/audio';
+import { speak } from './../../store/audio';
 import Loader from './../../Components/Loader';
 
 class GameClient extends React.Component {
@@ -57,7 +57,7 @@ class GameClient extends React.Component {
 function mapDispatchToProps(dispatch) {
   return {
     startGame: gameCode => dispatch(push(`/game/${gameCode}`)),
-    welcomeMessage: name => dispatch(playAudio(name)),
+    welcomeMessage: name => dispatch(speak(name)),
   };
 }
 

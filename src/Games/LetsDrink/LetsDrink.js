@@ -15,6 +15,11 @@ class LetsDrink extends Component {
     autoBind(this);
     this.state = {};
   }
+
+  componentDidMount() {
+    this.props.speak("Welcome to let's drink!");
+  }
+
   render() {
     return (
       <Screen>

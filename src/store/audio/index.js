@@ -35,7 +35,7 @@ export function clearQueue() {
 }
 
 // Thunks
-export function playAudio(message) {
+export function speak(message) {
   return dispatch => {
     play(message);
     dispatch(queueMessage(message));

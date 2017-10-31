@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Redux
-// import { singleGameSelector } from './../../store/games';
+import { speak } from './../../store/audio';
 
 // Helpers
 import games from './../../Games/games';
@@ -48,8 +48,11 @@ function GameWrapper(WrappedGame) {
   }
 
   function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+      speak: message => dispatch(speak(message)),
+    };
   }
+
   return connect(mapStateToProps, mapDispatchToProps)(GameWrapperHOC);
 }
 

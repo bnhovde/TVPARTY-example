@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 
 // Redux
-import { playAudio } from './../../store/audio';
+import { speak } from './../../store/audio';
 import { create } from './../../store/games';
 
 // Helpers
@@ -121,7 +121,7 @@ function mapDispatchToProps(dispatch) {
     createGame: (gameCode, gameType) => dispatch(create(gameCode, gameType)),
     startGame: gameCode => dispatch(push(`/host/${gameCode}`)),
     welcomeMessage: name =>
-      dispatch(playAudio(`${name} has joined the game! Tight!`)),
+      dispatch(speak(`${name} has joined the game! Tight!`)),
   };
 }
 
