@@ -3,7 +3,7 @@ export default [
     id: 'letsDrink',
     main: 'LetsDrink',
     name: "Let's drink!",
-    assets: 'LetsDrink',
+    assets: 'letsDrink',
     logo: 'logo.svg',
     active: true,
   },
