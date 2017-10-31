@@ -45,9 +45,8 @@ class Dashboard extends React.Component {
     const { gameType } = this.state.fields;
     const gameCode = generateGameCode();
     this.props.newGame(gameCode, gameType).then(() => {
-      console.log('test!');
+      this.props.startGame(gameCode);
     });
-    // this.props.startGame(gameCode);
   }
 
   handleChange(key, value) {
