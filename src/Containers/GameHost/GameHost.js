@@ -6,7 +6,7 @@ import autoBind from 'react-autobind';
 import { fetch, gameItemSelector } from './../../store/games';
 
 // Helpers
-import games from './../../constants/games';
+import games from './../../Games/games';
 
 // Components
 import * as gameComponents from './../../Games';
@@ -25,10 +25,10 @@ class GameHost extends React.Component {
 
   renderGame() {
     const { gameCode } = this.props.match.params;
-    const gameObj = this.props.allGames.find(g => g.code === gameCode);
-    const gameConfig = games.find(g => g.id === gameObj.gameType);
+    const gameData = this.props.allGames.find(g => g.code === gameCode);
+    const gameConfig = games.find(g => g.id === gameData.gameType);
     const GameComponent = gameComponents[gameConfig.main];
-    return <GameComponent />;
+    return <GameComponent gameData={gameData} />;
   }
 
   render() {

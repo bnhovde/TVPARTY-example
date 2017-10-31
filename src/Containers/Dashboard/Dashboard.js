@@ -9,7 +9,7 @@ import { create } from './../../store/games';
 
 // Helpers
 import { generateGameCode } from './../../utilities/helpers';
-import games from './../../constants/games';
+import games from './../../Games/games';
 
 // Components
 import JoinGameForm from './../../Components/JoinGameForm';

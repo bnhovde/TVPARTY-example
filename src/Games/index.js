@@ -1,3 +1,6 @@
+// Game imports
 import LetsDrink from './LetsDrink';
+import ExampleGame from './ExampleGame';
 
-export { LetsDrink };
+// Game exports
+export { LetsDrink, ExampleGame };

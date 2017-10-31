@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+// Redux
+// import { singleGameSelector } from './../../store/games';
+
 // Helpers
-import games from './../../constants/games';
+import games from './../../Games/games';
 
 function GameWrapper(WrappedGame) {
   class GameWrapperHOC extends Component {
@@ -39,8 +42,9 @@ function GameWrapper(WrappedGame) {
   }
 
   function mapStateToProps(state) {
-    // REDACTED
-    return {};
+    return {
+      allPlayers: state.games,
+    };
   }
 
   function mapDispatchToProps(dispatch) {
