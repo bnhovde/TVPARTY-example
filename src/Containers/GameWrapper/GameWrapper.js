@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 
 // Redux
-import { fetch, gameItemSelector } from './../../store/games';
+import { watchGame, singleGameLoaded } from './../../store/games';
 import { speak } from './../../store/audio';
 
 // Helpers
@@ -18,17 +18,19 @@ class GameHost extends React.Component {
   constructor(props) {
     super(props);
     autoBind(this);
-    this.state = {};
+    this.state = {
+      gameCode: this.props.match.params.gameCode,
+    };
   }
 
   componentDidMount() {
-    this.props.fetchGames();
+    this.props.watchGame(this.state.gameCode);
   }
 
   renderGame() {
-    const { path, params: { gameCode } } = this.props.match;
+    const { path } = this.props.match;
     const isHost = path.includes('/host');
-    const gameData = this.props.allGames.find(g => g.code === gameCode);
+    const gameData = this.props.currentGame;
     const gameConfig = games.find(g => g.id === gameData.gameType);
     const GameComponent = gameComponents[gameConfig.main];
     return (
@@ -42,24 +44,18 @@ class GameHost extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {!this.props.allGames.length > 0 ? <Loader /> : this.renderGame()}
-      </div>
-    );
+    return <div>{!this.props.gameLoaded ? <Loader /> : this.renderGame()}</div>;
   }
 }
 
 GameHost.propTypes = {
-  allGames: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      code: PropTypes.string.isRequired,
-      gameType: PropTypes.string.isRequired,
-      timestamp: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-  fetchGames: PropTypes.func.isRequired,
+  gameLoaded: PropTypes.bool.isRequired,
+  currentGame: PropTypes.shape({
+    code: PropTypes.string,
+    gameType: PropTypes.string,
+    timestamp: PropTypes.number,
+  }).isRequired,
+  watchGame: PropTypes.func.isRequired,
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
     params: PropTypes.shape({
@@ -70,13 +66,14 @@ GameHost.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    allGames: gameItemSelector(state.games),
+    currentGame: state.games.currentGame,
+    gameLoaded: singleGameLoaded(state.games),
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchGames: () => dispatch(fetch()),
+    watchGame: gameCode => dispatch(watchGame(gameCode)),
     speak: message => dispatch(speak(message)),
   };
 }

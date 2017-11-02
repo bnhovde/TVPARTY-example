@@ -8,4 +8,13 @@ const generateGameCode = function generateGameCode() {
   return res;
 };
 
-export { generateGameCode };
+/**
+ * @desc    Checks if object is empty
+ * @param   {object} Object to process
+ * @returns {bool} true if empty
+ */
+const checkObjEmpty = function checkObjEmpty(object) {
+  return Object.keys(object).length === 0 && object.constructor === Object;
+};
+
+export { generateGameCode, checkObjEmpty };

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import Screen from './../../Primitives/Screen';
-import { H1, H2 } from './../../Primitives/H';
-import Block from './../../Primitives/Block';
+import Screen from './../../../Primitives/Screen';
+import { H1, H2 } from './../../../Primitives/H';
+import Block from './../../../Primitives/Block';
 
-class LetsDrink extends Component {
+class SplashScreen extends Component {
   constructor(props) {
     super(props);
     autoBind(this);
@@ -18,18 +18,19 @@ class LetsDrink extends Component {
   }
 
   render() {
-    const { players = [], code = '' } = this.props.gameData;
     return (
       <Screen>
         <H1>Let`s drink!</H1>
-        <p>Game code: {code}</p>
+        <p>Game code: {this.props.gameData.code}</p>
         <Block top={1}>
           <H2>Connected players:</H2>
-          {players.map(p => <p>p.name</p>)}
+        </Block>
+        <Block top={1}>
+          <p>Press "start" once everyone is in!</p>
         </Block>
       </Screen>
     );
   }
 }
 
-export default LetsDrink;
+export default SplashScreen;
