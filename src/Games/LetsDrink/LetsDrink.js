@@ -6,9 +6,6 @@ import Screen from './../../Primitives/Screen';
 import { H1, H2 } from './../../Primitives/H';
 import Block from './../../Primitives/Block';
 
-// Containers
-import GameWrapper from './../../Containers/GameWrapper';
-
 class LetsDrink extends Component {
   constructor(props) {
     super(props);
@@ -33,4 +30,4 @@ class LetsDrink extends Component {
   }
 }
 
-export default GameWrapper(LetsDrink);
+export default LetsDrink;

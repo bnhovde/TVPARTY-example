@@ -6,9 +6,6 @@ import Screen from './../../Primitives/Screen';
 import { H1, H2 } from './../../Primitives/H';
 import Block from './../../Primitives/Block';
 
-// Containers
-import GameWrapper from './../../Containers/GameWrapper';
-
 class ExampleGame extends Component {
   constructor(props) {
     super(props);
@@ -28,4 +25,4 @@ class ExampleGame extends Component {
   }
 }
 
-export default GameWrapper(ExampleGame);
+export default ExampleGame;

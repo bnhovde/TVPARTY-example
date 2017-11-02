@@ -1,59 +1,84 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import autoBind from 'react-autobind';
 
 // Redux
+import { fetch, gameItemSelector } from './../../store/games';
 import { speak } from './../../store/audio';
 
 // Helpers
 import games from './../../Games/games';
 
-function GameWrapper(WrappedGame) {
-  class GameWrapperHOC extends Component {
-    constructor() {
-      super();
-      this.state = {
-        count: 0,
-      };
-      this.onCheckboxChange = this.onCheckboxChange.bind(this);
-    }
+// Components
+import Loader from './../../Components/Loader';
+import * as gameComponents from './../../Games';
 
-    onClick(e) {}
-
-    onCheckboxChange(e) {}
-
-    render() {
-      const countLabel =
-        this.state.count > 0 ? <span>{this.state.count}</span> : null;
-
-      return (
-        <div>
-          <div>{countLabel}</div>
-          <div>
-            <WrappedGame
-              {...this.state}
-              {...this.props}
-              onCheckboxChange={this.onCheckboxChange}
-            />
-          </div>
-        </div>
-      );
-    }
+class GameHost extends React.Component {
+  constructor(props) {
+    super(props);
+    autoBind(this);
+    this.state = {};
   }
 
-  function mapStateToProps(state) {
-    return {
-      allPlayers: state.games,
-    };
+  componentDidMount() {
+    this.props.fetchGames();
   }
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      speak: message => dispatch(speak(message)),
-    };
+  renderGame() {
+    const { path, params: { gameCode } } = this.props.match;
+    const isHost = path.includes('/host');
+    const gameData = this.props.allGames.find(g => g.code === gameCode);
+    const gameConfig = games.find(g => g.id === gameData.gameType);
+    const GameComponent = gameComponents[gameConfig.main];
+    return (
+      <GameComponent
+        gameData={gameData}
+        isHost={isHost}
+        {...this.state}
+        {...this.props}
+      />
+    );
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(GameWrapperHOC);
+  render() {
+    return (
+      <div>
+        {!this.props.allGames.length > 0 ? <Loader /> : this.renderGame()}
+      </div>
+    );
+  }
 }
 
-export default GameWrapper;
+GameHost.propTypes = {
+  allGames: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      code: PropTypes.string.isRequired,
+      gameType: PropTypes.string.isRequired,
+      timestamp: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+  fetchGames: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      gameCode: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
+function mapStateToProps(state) {
+  return {
+    allGames: gameItemSelector(state.games),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchGames: () => dispatch(fetch()),
+    speak: message => dispatch(speak(message)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameHost);
