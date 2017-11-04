@@ -21,6 +21,13 @@ export function fetchGames() {
     .orderByKey();
 }
 
+export function addPlayerToGame(code, userData) {
+  return firebase
+    .database()
+    .ref(`games/${code}/players`)
+    .push(userData);
+}
+
 export function fetchGameByCode(code) {
   return firebase.database().ref(`games/${code}`);
 }

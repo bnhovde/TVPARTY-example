@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Prompt } from 'react-router';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 
 // Redux
-import { watchGame, singleGameLoaded } from './../../store/games';
+import { watchGame, addPlayer, singleGameLoaded } from './../../store/games';
 import { speak } from './../../store/audio';
 
 // Helpers
@@ -19,24 +20,32 @@ class GameHost extends React.Component {
     super(props);
     autoBind(this);
     this.state = {
+      isHost: this.props.match.path.includes('/host'),
       gameCode: this.props.match.params.gameCode,
     };
   }
 
   componentDidMount() {
     this.props.watchGame(this.state.gameCode);
+    window.addEventListener('beforeunload', this.handleWindowClose);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.handleWindowClose);
+  }
+
+  handleWindowClose(e) {
+    // Set user to inactive
   }
 
   renderGame() {
-    const { path } = this.props.match;
-    const isHost = path.includes('/host');
     const gameData = this.props.currentGame;
     const gameConfig = games.find(g => g.id === gameData.gameType);
     const GameComponent = gameComponents[gameConfig.main];
     return (
       <GameComponent
         gameData={gameData}
-        isHost={isHost}
+        isHost={this.state.isHost}
         {...this.state}
         {...this.props}
       />
@@ -73,8 +82,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    watchGame: gameCode => dispatch(watchGame(gameCode)),
     speak: message => dispatch(speak(message)),
+    watchGame: gameCode => dispatch(watchGame(gameCode)),
+    addPlayer: (gameCode, playerData) =>
+      dispatch(addPlayer(gameCode, playerData)),
   };
 }
 

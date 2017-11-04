@@ -14,18 +14,20 @@ class LetsDrink extends Component {
   }
 
   componentDidMount() {
+    // If not host, add player to game
     this.props.speak("Welcome to let's drink!");
+    this.props.addPlayer(this.props.gameData.code, { name: 'bobbs' });
   }
 
   render() {
-    const { players = [], code = '' } = this.props.gameData;
+    const { players = {}, code = '' } = this.props.gameData;
     return (
       <Screen>
         <H1>Let`s drink!</H1>
         <p>Game code: {code}</p>
         <Block top={1}>
           <H2>Connected players:</H2>
-          {players.map(p => <p>p.name</p>)}
+          {Object.keys(players).map(p => <p>{players[p].name}</p>)}
         </Block>
       </Screen>
     );
