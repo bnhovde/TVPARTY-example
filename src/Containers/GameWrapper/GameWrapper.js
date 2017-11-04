@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Prompt } from 'react-router';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 
 // Redux
-import { watchGame, addPlayer, singleGameLoaded } from './../../store/games';
+import { watchGame, singleGameLoaded } from './../../store/games';
+import {
+  addPlayer,
+  currentPlayer,
+  playerDataLoaded,
+} from './../../store/players';
 import { speak } from './../../store/audio';
 
 // Helpers
@@ -27,15 +31,6 @@ class GameHost extends React.Component {
 
   componentDidMount() {
     this.props.watchGame(this.state.gameCode);
-    window.addEventListener('beforeunload', this.handleWindowClose);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.handleWindowClose);
-  }
-
-  handleWindowClose(e) {
-    // Set user to inactive
   }
 
   renderGame() {
@@ -76,6 +71,8 @@ GameHost.propTypes = {
 function mapStateToProps(state) {
   return {
     currentGame: state.games.currentGame,
+    currentPlayer: currentPlayer(state.players),
+    playerLoaded: playerDataLoaded(state.players),
     gameLoaded: singleGameLoaded(state.games),
   };
 }

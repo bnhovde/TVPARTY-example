@@ -29,14 +29,17 @@ class GamePad extends Component {
 
   render() {
     const { playerName } = this.state.fields;
-    const { hasJoined, onAddPlayer } = this.props;
+    const { currentPlayer, playerLoaded, onAddPlayer } = this.props;
     return (
       <Screen>
-        {hasJoined ? (
+        {playerLoaded ? (
           <div>
-            <H1>Hi There!</H1>
+            <H1>Hi There {currentPlayer.name}!</H1>
             <Block top={2}>
-              <Button>Join </Button>
+              <p>Wait for other players to connect, then click start!</p>
+            </Block>
+            <Block top={2}>
+              <Button>Start game!</Button>
             </Block>
           </div>
         ) : (
