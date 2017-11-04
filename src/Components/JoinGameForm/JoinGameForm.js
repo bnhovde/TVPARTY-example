@@ -27,39 +27,24 @@ const Form = styled.form`
 `;
 
 function JoinGameForm(props) {
-  const { gameCode = '', userName = '', onSubmit, onChange, onCancel } = props;
+  const { playerName = '', onSubmit, onChange } = props;
 
   return (
     <Form onSubmit={onSubmit}>
       <Screen>
-        <H1>Join a game</H1>
+        <H1>Join the action!</H1>
         <Block top={2}>
           <Input
             required
-            placeholder="Enter game code"
-            value={gameCode}
+            placeholder="Enter name"
+            value={playerName}
             onChange={({ target }) => {
-              onChange('gameCode', target.value);
-            }}
-          />
-        </Block>
-        <Block top={0.5}>
-          <Input
-            required
-            placeholder="Enter username"
-            value={userName}
-            onChange={({ target }) => {
-              onChange('userName', target.value);
+              onChange('playerName', target.value);
             }}
           />
         </Block>
         <Block top={1}>
           <Button type="submit">Join Game!</Button>
-        </Block>
-        <Block top={0.5}>
-          <Button bad onClick={onCancel}>
-            Cancel
-          </Button>
         </Block>
       </Screen>
     </Form>

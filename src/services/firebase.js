@@ -3,15 +3,11 @@ import config from './../constants/config';
 
 firebase.initializeApp(config);
 
-export function createGame(code, gameType) {
+export function createGame(gameData) {
   return firebase
     .database()
-    .ref(`games/${code}`)
-    .set({
-      code,
-      gameType,
-      timestamp: Date.now(),
-    });
+    .ref(`games/${gameData.gameCode}`)
+    .set(gameData);
 }
 
 export function fetchGames() {
@@ -21,10 +17,10 @@ export function fetchGames() {
     .orderByKey();
 }
 
-export function addPlayerToGame(code, userData) {
+export function addPlayerToGame(gameCode, userData) {
   return firebase
     .database()
-    .ref(`games/${code}/players`)
+    .ref(`games/${gameCode}/players`)
     .push(userData);
 }
 

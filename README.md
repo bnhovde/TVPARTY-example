@@ -4,13 +4,13 @@ A framework for building multiplayer games for the TV.
 #### Demo
 [coming soon]
 
-#### Developing:
+## Developing:
 ```
 npm install
 npm start
 ```
 
-#### Creating a new game
+## Creating a new game
 TVPARTY provides a few helper methods and events, but it's up to you to build your own games. Have a look at the example game for inspiration.
 
 To create a new game:
@@ -20,27 +20,50 @@ To create a new game:
 - 4: Wrap your main game file in the `gameWrapper` component. (see API below)
 - 5: Go wild!
 
-#### API
+## API
 
-The `GameWrapper` is a higher-order component that will provides the following API:
+The `GameWrapper` is a higher-order component that will provides the following props and API:
 
 Props:
 ```
-gameData
+gameData    - (Object)  All game data (real-time)
+isHost      - (Bool)    True if host, false if player
+gameCode    - (String)  4-digit game code
 ```
 
 Events:
+
+### `updateGameData(path, data)`
+
+Post updates to firebase
+
+#### Parameters
+- path (String) Path to the data to modify
+- data (Object) Data to store
+
+
+### `sendPlayerEvent(playerId, data)`
+
+Send event from player (input changed etc)
+
+#### Parameters
+- playerId (String) ID of player
+- data (Object) Data to store
+
+
+### `speak(message)`
+
+Text-to-speech output with queuing built in using the native webSpeechAPI.
+
+#### Parameters
+- message (string) The text to read aloud
+
 ```
 playerConnected(playerId)
 playerDisconnected(playerId)
-gameDataChanged(newGameData)
+gameDataChanged()
 ```
 
-Methods:
-```
-speak(message)
-getGameData()
-```
 
 #### Tips:
 If you want automatic linting (using prettier), add the prettier ext to your editor and enable `formatOnSave`.

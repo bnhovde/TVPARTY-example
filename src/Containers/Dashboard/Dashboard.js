@@ -12,11 +12,11 @@ import { generateGameCode } from './../../utilities/helpers';
 import games from './../../Games/games';
 
 // Components
-import JoinGameForm from './../../Components/JoinGameForm';
-import Drawer from './../../Components/Drawer';
+import { Input } from '../../Primitives/Input';
 import Toggle from './../../Components/Toggle';
 import { H1 } from './../../Primitives/H';
 import { Button } from './../../Primitives/Button';
+import Form from './../../Primitives/Form';
 import Block from './../../Primitives/Block';
 import Screen from './../../Primitives/Screen';
 
@@ -28,24 +28,24 @@ class Dashboard extends React.Component {
       fields: {
         gameType: games[0].id,
         gameCode: '',
-        userName: '',
       },
-      overlayVisible: false,
     };
   }
 
   handleJoinGame() {
-    const { gameCode, userName } = this.state.fields;
-    // TO-DO: Check that game exists, and that username is available
-    this.props.welcomeMessage(userName);
-    this.props.startGame(gameCode);
+    const { gameCode } = this.state.fields;
+    this.props.joinGame(gameCode);
   }
 
   startNewGame() {
-    const { gameType } = this.state.fields;
-    const gameCode = generateGameCode();
-    this.props.createGame(gameCode, gameType).then(() => {
-      this.props.startGame(gameCode);
+    const gameData = {
+      gameType: this.state.fields.gameType,
+      gameCode: generateGameCode(),
+      created: Date.now(),
+      data: {},
+    };
+    this.props.createGame(gameData).then(() => {
+      this.props.hostGame(gameData.gameCode);
     });
   }
 
@@ -57,21 +57,8 @@ class Dashboard extends React.Component {
     });
   }
 
-  handleCancel(e) {
-    e.preventDefault();
-    this.setState({
-      overlayVisible: false,
-    });
-  }
-
-  joinGame() {
-    this.setState({
-      overlayVisible: true,
-    });
-  }
-
   render() {
-    const { gameCode, userName, gameType } = this.state.fields;
+    const { gameCode, gameType } = this.state.fields;
 
     return (
       <Screen>
@@ -94,23 +81,27 @@ class Dashboard extends React.Component {
           <Button onClick={() => this.startNewGame()}>Start new game</Button>
         </Block>
 
-        <Block top={1} align="center">
+        <Block top={1} bottom={1} align="center">
           <p>– OR –</p>
         </Block>
 
-        <Block top={1}>
-          <Button onClick={() => this.joinGame()}>Join existing game</Button>
-        </Block>
-
-        <Drawer visible={this.state.overlayVisible}>
-          <JoinGameForm
-            gameCode={gameCode}
-            userName={userName}
-            onChange={this.handleChange}
-            onSubmit={this.handleJoinGame}
-            onCancel={this.handleCancel}
-          />
-        </Drawer>
+        <Form onSubmit={this.handleJoinGame}>
+          <Block top={1} left={0.5} right={0.5}>
+            <Input
+              required
+              placeholder="Enter code (4 letters)"
+              value={gameCode}
+              onChange={({ target }) => {
+                this.handleChange('gameCode', target.value);
+              }}
+            />
+          </Block>
+          <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
+            <Button type="submit" disabled={gameCode.length !== 4}>
+              Join Game!
+            </Button>
+          </Block>
+        </Form>
       </Screen>
     );
   }
@@ -118,8 +109,9 @@ class Dashboard extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    createGame: (gameCode, gameType) => dispatch(create(gameCode, gameType)),
-    startGame: gameCode => dispatch(push(`/host/${gameCode}`)),
+    createGame: gameData => dispatch(create(gameData)),
+    hostGame: gameCode => dispatch(push(`/host/${gameCode}`)),
+    joinGame: gameCode => dispatch(push(`/${gameCode}`)),
     welcomeMessage: name =>
       dispatch(speak(`${name} has joined the game! Tight!`)),
   };

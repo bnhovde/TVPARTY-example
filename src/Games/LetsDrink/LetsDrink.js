@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import Screen from './../../Primitives/Screen';
-import { H1, H2 } from './../../Primitives/H';
-import Block from './../../Primitives/Block';
+import SplashScreen from './Screens/Splash';
+import GamePad from './Controllers/GamePad';
 
 class LetsDrink extends Component {
   constructor(props) {
@@ -13,23 +12,23 @@ class LetsDrink extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    // If not host, add player to game
-    this.props.speak("Welcome to let's drink!");
-    this.props.addPlayer(this.props.gameData.code, { name: 'bobbs' });
+  handleAddPlayer(e, playerName) {
+    e.preventDefault();
+    this.props.addPlayer(this.props.gameData.gameCode, {
+      name: playerName || 'Unknown player',
+    });
   }
 
   render() {
-    const { players = {}, code = '' } = this.props.gameData;
+    const { players = {}, gameCode = '' } = this.props.gameData;
     return (
-      <Screen>
-        <H1>Let`s drink!</H1>
-        <p>Game code: {code}</p>
-        <Block top={1}>
-          <H2>Connected players:</H2>
-          {Object.keys(players).map(p => <p>{players[p].name}</p>)}
-        </Block>
-      </Screen>
+      <div>
+        {this.props.isHost ? (
+          <SplashScreen {...this.props} />
+        ) : (
+          <GamePad {...this.props} onAddPlayer={this.handleAddPlayer} />
+        )}
+      </div>
     );
   }
 }

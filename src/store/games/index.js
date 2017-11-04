@@ -20,6 +20,7 @@ const WATCH_GAME_UPDATE = 'app/games/WATCH_GAME_UPDATE';
 const initialState = {
   allGames: [],
   currentGame: {},
+  currentPlayer: {},
   lastFetched: null,
   isFetching: false,
 };
@@ -96,8 +97,8 @@ export function addPlayerRequest(playerData) {
   return { type: ADD_PLAYER_REQUEST, playerData };
 }
 
-export function addPlayerSuccess() {
-  return { type: ADD_PLAYER_SUCCESS };
+export function addPlayerSuccess(e) {
+  return { type: ADD_PLAYER_SUCCESS, e };
 }
 
 export function addPlayerFailure(error) {
@@ -130,7 +131,7 @@ export function addPlayer(gameCode, playerData) {
   return dispatch => {
     dispatch(addPlayerRequest(playerData));
     return addPlayerToGame(gameCode, playerData)
-      .then(() => dispatch(addPlayerSuccess()))
+      .then(e => dispatch(addPlayerSuccess(e)))
       .catch(error => {
         dispatch(addPlayerFailure(error));
         throw error;

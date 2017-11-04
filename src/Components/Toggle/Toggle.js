@@ -15,13 +15,13 @@ const ToggleButton = styled.button`
   cursor: pointer;
   border: 0;
   padding: 0;
-  transform: ${props => (props.active ? 'scale(1)' : 'scale(0.8)')};
-  transition: transform 0.3s ease;
+  opacity: ${props => (props.active ? '1' : '0.2')};
+  transition: opacity 0.3s ease;
 `;
 
 const Image = styled.img`
   display: block;
-  width: 20vw;
+  width: 15vw;
   margin-bottom: ${gutter.vertical / 4}vw;
 `;
 
