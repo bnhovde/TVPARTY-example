@@ -19,8 +19,16 @@ class SplashScreen extends Component {
 
   componentWillReceiveProps(nextProps) {
     // If a new player has connected, greet!
-    const { players, gameCode } = nextProps.gameData;
+    const { players, gameCode, chats } = nextProps.gameData;
     const newPlayerId = Object.keys(players).find(p => !players[p].isGreeted);
+    if (chats) {
+      const newGameData = {
+        ...nextProps.gameData,
+        chats: [],
+      };
+      this.props.speak(chats[0]);
+      this.props.updateGameData(gameCode, newGameData);
+    }
     if (newPlayerId) {
       const randomGreeting =
         greetings[Math.floor(Math.random() * greetings.length)];
@@ -28,7 +36,7 @@ class SplashScreen extends Component {
       this.props.speak(
         `${players[newPlayerId].name} has joined the game! ${randomGreeting}`,
       );
-      this.props.addPlayerData(gameCode, newPlayerId, newPlayerData);
+      this.props.updatePlayerData(gameCode, newPlayerId, newPlayerData);
     }
   }
 

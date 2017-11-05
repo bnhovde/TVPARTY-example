@@ -4,10 +4,14 @@ import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 
 // Redux
-import { watchGame, singleGameLoaded } from './../../store/games';
+import {
+  watchGame,
+  singleGameLoaded,
+  updateGameData,
+} from './../../store/games';
 import {
   addPlayer,
-  addPlayerData,
+  updatePlayerData,
   currentPlayer,
   playerDataLoaded,
 } from './../../store/players';
@@ -87,8 +91,10 @@ function mapDispatchToProps(dispatch) {
     watchGame: gameCode => dispatch(watchGame(gameCode)),
     addPlayer: (gameCode, playerData) =>
       dispatch(addPlayer(gameCode, playerData)),
-    addPlayerData: (gameCode, playerId, playerData) =>
-      dispatch(addPlayerData(gameCode, playerId, playerData)),
+    updatePlayerData: (gameCode, playerId, playerData) =>
+      dispatch(updatePlayerData(gameCode, playerId, playerData)),
+    updateGameData: (gameCode, gameData) =>
+      dispatch(updateGameData(gameCode, gameData)),
   };
 }
 

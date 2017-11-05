@@ -24,11 +24,18 @@ export function addPlayerToGame(gameCode, playerData) {
     .push(playerData);
 }
 
-export function addPlaterDataToGame(gameCode, playerId, newPlayerData) {
+export function updatePlayer(gameCode, playerId, newPlayerData) {
   return firebase
     .database()
     .ref(`games/${gameCode}/players/${playerId}`)
     .set(newPlayerData);
+}
+
+export function updateGame(gameCode, newGameData) {
+  return firebase
+    .database()
+    .ref(`games/${gameCode}`)
+    .set(newGameData);
 }
 
 export function fetchGameByCode(code) {

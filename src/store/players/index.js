@@ -1,8 +1,5 @@
 // Services
-import {
-  addPlayerToGame,
-  addPlaterDataToGame,
-} from './../../services/firebase';
+import { addPlayerToGame, updatePlayer } from './../../services/firebase';
 
 // Helpers
 import { checkObjEmpty } from './../../utilities/helpers';
@@ -11,9 +8,9 @@ import { checkObjEmpty } from './../../utilities/helpers';
 const ADD_PLAYER_REQUEST = 'app/games/ADD_PLAYER_REQUEST';
 const ADD_PLAYER_SUCCESS = 'app/games/ADD_PLAYER_SUCCESS';
 const ADD_PLAYER_FAILURE = 'app/games/ADD_PLAYER_FAILURE';
-const ADD_PLAYER_DATA_REQUEST = 'app/games/ADD_PLAYER_DATA_REQUEST';
-const ADD_PLAYER_DATA_SUCCESS = 'app/games/ADD_PLAYER_DATA_SUCCESS';
-const ADD_PLAYER_DATA_FAILURE = 'app/games/ADD_PLAYER_DATA_FAILURE';
+const UPDATE_PLAYER_REQUEST = 'app/games/UPDATE_PLAYER_REQUEST';
+const UPDATE_PLAYER_SUCCESS = 'app/games/UPDATE_PLAYER_SUCCESS';
+const UPDATE_PLAYER_FAILURE = 'app/games/UPDATE_PLAYER_FAILURE';
 
 const initialState = {
   allPlayers: [],
@@ -41,17 +38,17 @@ export default function reducer(state = initialState, action) {
         isReady: false,
         apiError: true,
       });
-    case ADD_PLAYER_DATA_REQUEST:
+    case UPDATE_PLAYER_REQUEST:
       return Object.assign({}, state, {
         isReady: false,
         errorMessage: '',
       });
-    case ADD_PLAYER_DATA_SUCCESS:
+    case UPDATE_PLAYER_SUCCESS:
       return Object.assign({}, state, {
         isReady: true,
         apiError: false,
       });
-    case ADD_PLAYER_DATA_FAILURE:
+    case UPDATE_PLAYER_FAILURE:
       return Object.assign({}, state, {
         isReady: false,
         apiError: true,
@@ -74,16 +71,16 @@ export function addPlayerFailure(error) {
   return { type: ADD_PLAYER_FAILURE, error };
 }
 
-export function addPlayerDataRequest(playerData) {
-  return { type: ADD_PLAYER_DATA_REQUEST, playerData };
+export function updatePlayerRequest(playerData) {
+  return { type: UPDATE_PLAYER_REQUEST, playerData };
 }
 
-export function addPlayerDataSuccess() {
-  return { type: ADD_PLAYER_DATA_SUCCESS };
+export function updatePlayerSuccess() {
+  return { type: UPDATE_PLAYER_SUCCESS };
 }
 
-export function addPlayerDataFailure(error) {
-  return { type: ADD_PLAYER_DATA_FAILURE, error };
+export function updatePlayerFailure(error) {
+  return { type: UPDATE_PLAYER_FAILURE, error };
 }
 
 // Add player thunk
@@ -100,13 +97,13 @@ export function addPlayer(gameCode, playerData) {
 }
 
 // Add player data thunk
-export function addPlayerData(gameCode, playerId, playerData) {
+export function updatePlayerData(gameCode, playerId, playerData) {
   return dispatch => {
-    dispatch(addPlayerDataRequest(gameCode, playerId, playerData));
-    return addPlaterDataToGame(gameCode, playerId, playerData)
-      .then(() => dispatch(addPlayerDataSuccess()))
+    dispatch(updatePlayerRequest(gameCode, playerId, playerData));
+    return updatePlayer(gameCode, playerId, playerData)
+      .then(() => dispatch(updatePlayerSuccess()))
       .catch(error => {
-        dispatch(addPlayerDataFailure(error));
+        dispatch(updatePlayerFailure(error));
         throw error;
       });
   };
