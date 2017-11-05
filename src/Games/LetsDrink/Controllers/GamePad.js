@@ -48,7 +48,7 @@ class GamePad extends Component {
       <Screen>
         {playerLoaded ? (
           <div>
-            <H1>Hi There {currentPlayer.name}!</H1>
+            <H1>Hi, {currentPlayer.name}!</H1>
             <Block top={2}>
               <p>Wait for other players to connect, then click start!</p>
             </Block>

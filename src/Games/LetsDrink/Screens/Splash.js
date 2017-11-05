@@ -8,7 +8,7 @@ import Block from './../../../Primitives/Block';
 import { Button } from './../../../Primitives/Button';
 
 // TEMP
-const greetings = ['Tight!', 'Time to party', 'uh-oh'];
+const greetings = ['Sweet!', 'himalaya', 'oh dear'];
 
 class SplashScreen extends Component {
   constructor(props) {
