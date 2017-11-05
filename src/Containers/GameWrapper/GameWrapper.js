@@ -7,6 +7,7 @@ import autoBind from 'react-autobind';
 import { watchGame, singleGameLoaded } from './../../store/games';
 import {
   addPlayer,
+  addPlayerData,
   currentPlayer,
   playerDataLoaded,
 } from './../../store/players';
@@ -71,7 +72,10 @@ GameHost.propTypes = {
 function mapStateToProps(state) {
   return {
     currentGame: state.games.currentGame,
-    currentPlayer: currentPlayer(state.players),
+    currentPlayer: currentPlayer(
+      state.games.currentGame,
+      state.players.currentPlayer,
+    ),
     playerLoaded: playerDataLoaded(state.players),
     gameLoaded: singleGameLoaded(state.games),
   };
@@ -83,6 +87,8 @@ function mapDispatchToProps(dispatch) {
     watchGame: gameCode => dispatch(watchGame(gameCode)),
     addPlayer: (gameCode, playerData) =>
       dispatch(addPlayer(gameCode, playerData)),
+    addPlayerData: (gameCode, playerId, playerData) =>
+      dispatch(addPlayerData(gameCode, playerId, playerData)),
   };
 }
 

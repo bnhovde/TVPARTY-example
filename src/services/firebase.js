@@ -17,11 +17,18 @@ export function fetchGames() {
     .orderByKey();
 }
 
-export function addPlayerToGame(gameCode, userData) {
+export function addPlayerToGame(gameCode, playerData) {
   return firebase
     .database()
     .ref(`games/${gameCode}/players`)
-    .push(userData);
+    .push(playerData);
+}
+
+export function addPlaterDataToGame(gameCode, playerId, newPlayerData) {
+  return firebase
+    .database()
+    .ref(`games/${gameCode}/players/${playerId}`)
+    .set(newPlayerData);
 }
 
 export function fetchGameByCode(code) {

@@ -4,7 +4,9 @@ import autoBind from 'react-autobind';
 // Components
 import Screen from './../../../Primitives/Screen';
 import JoinGameForm from './../../../Components/JoinGameForm';
+import ChatForm from './../../../Components/ChatForm';
 import { H1, H2 } from './../../../Primitives/H';
+import { Input } from '../../../Primitives/Input';
 import { Button } from './../../../Primitives/Button';
 import Block from './../../../Primitives/Block';
 
@@ -27,8 +29,20 @@ class GamePad extends Component {
     });
   }
 
+  handleSendMessage(e) {
+    e.preventDefault();
+    this.props.speak(
+      `${this.props.currentPlayer.name} says ${this.state.fields.chatMessage}`,
+    );
+    this.setState({
+      fields: Object.assign({}, this.state.fields, {
+        chatMessage: '',
+      }),
+    });
+  }
+
   render() {
-    const { playerName } = this.state.fields;
+    const { playerName, chatMessage } = this.state.fields;
     const { currentPlayer, playerLoaded, onAddPlayer } = this.props;
     return (
       <Screen>
@@ -39,7 +53,11 @@ class GamePad extends Component {
               <p>Wait for other players to connect, then click start!</p>
             </Block>
             <Block top={2}>
-              <Button>Start game!</Button>
+              <ChatForm
+                chatMessage={chatMessage}
+                onChange={this.handleChange}
+                onSubmit={this.handleSendMessage}
+              />
             </Block>
           </div>
         ) : (
