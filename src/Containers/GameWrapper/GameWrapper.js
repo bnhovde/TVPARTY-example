@@ -40,7 +40,7 @@ class GameHost extends React.Component {
 
     // https://stackoverflow.com/a/38932078
     // Join websockets room
-    this.socket = io();
+    this.socket = io.connect(window.location.hostname);
     this.socket.on('connect', () => {
       this.socket.emit('room', this.state.gameCode);
     });
