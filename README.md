@@ -2,7 +2,7 @@
 A framework for building multiplayer games for the TV.
 
 #### Demo
-[coming soon]
+[https://tvparty-io.herokuapp.com/](https://tvparty-io.herokuapp.com/)
 
 ## Developing:
 ```
