@@ -31,9 +31,11 @@ class GamePad extends Component {
 
   handleSendMessage(e) {
     e.preventDefault();
-    this.props.onChat(
-      `${this.props.currentPlayer.name} says ${this.state.fields.chatMessage}`,
-    );
+    this.props.sendEvent({
+      type: 'speak',
+      message: `${this.props.currentPlayer.name} says ${this.state.fields
+        .chatMessage}`,
+    });
     this.setState({
       fields: Object.assign({}, this.state.fields, {
         chatMessage: '',

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 
@@ -36,6 +37,18 @@ class GameHost extends React.Component {
 
   componentDidMount() {
     this.props.watchGame(this.state.gameCode);
+
+    // https://stackoverflow.com/a/38932078
+    // Join websockets room
+    this.socket = io('http://localhost:8000/');
+    this.socket.on('connect', () => {
+      this.socket.emit('room', this.state.gameCode);
+    });
+  }
+
+  sendEvent(data) {
+    console.log('send event!');
+    this.socket.emit('socket/WS_EVENT', this.state.gameCode, data);
   }
 
   renderGame() {
@@ -46,6 +59,8 @@ class GameHost extends React.Component {
       <GameComponent
         gameData={gameData}
         isHost={this.state.isHost}
+        sendEvent={this.sendEvent}
+        socket={this.socket}
         {...this.state}
         {...this.props}
       />

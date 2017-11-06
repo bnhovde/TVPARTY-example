@@ -17,27 +17,18 @@ class SplashScreen extends Component {
     this.state = {};
   }
 
-  componentWillReceiveProps(nextProps) {
-    // If a new player has connected, greet!
-    const { players, gameCode, chats } = nextProps.gameData;
-    const newPlayerId = Object.keys(players).find(p => !players[p].isGreeted);
-    if (chats) {
-      const newGameData = {
-        ...nextProps.gameData,
-        chats: [],
-      };
-      this.props.speak(chats[0]);
-      this.props.updateGameData(gameCode, newGameData);
-    }
-    if (newPlayerId) {
-      const randomGreeting =
-        greetings[Math.floor(Math.random() * greetings.length)];
-      const newPlayerData = { ...players[newPlayerId], isGreeted: true };
-      this.props.speak(
-        `${players[newPlayerId].name} has joined the game! ${randomGreeting}`,
-      );
-      this.props.updatePlayerData(gameCode, newPlayerId, newPlayerData);
-    }
+  componentDidMount() {
+    this.props.socket.on('message', data => {
+      console.log('splash screen message!', data);
+      if (data.type === 'speak') {
+        this.props.speak(data.message);
+      }
+      if (data.type === 'greetPlayer') {
+        const randomGreeting =
+          greetings[Math.floor(Math.random() * greetings.length)];
+        this.props.speak(`${data.name} has joined the game! ${randomGreeting}`);
+      }
+    });
   }
 
   render() {

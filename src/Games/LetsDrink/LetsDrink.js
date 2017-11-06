@@ -17,14 +17,10 @@ class LetsDrink extends Component {
     this.props.addPlayer(this.props.gameData.gameCode, {
       name: playerName || 'Unknown player',
     });
-  }
-
-  handleChat(message) {
-    const newGameData = {
-      ...this.props.gameData,
-      chats: [message],
-    };
-    this.props.updateGameData(this.props.gameData.gameCode, newGameData);
+    this.props.sendEvent({
+      type: 'greetPlayer',
+      name: playerName,
+    });
   }
 
   render() {
@@ -34,11 +30,7 @@ class LetsDrink extends Component {
         {this.props.isHost ? (
           <SplashScreen {...this.props} />
         ) : (
-          <GamePad
-            {...this.props}
-            onAddPlayer={this.handleAddPlayer}
-            onChat={this.handleChat}
-          />
+          <GamePad {...this.props} onAddPlayer={this.handleAddPlayer} />
         )}
       </div>
     );
