@@ -1,18 +1,18 @@
-const path = require('path');
 const express = require('express');
+const socketIO = require('socket.io');
+const path = require('path');
 
-const port = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
+const INDEX = path.join(__dirname, 'index.html');
 
-const app = express();
-const server = app.listen(port);
-const io = require('socket.io').listen(server);
+const server = express()
+  .use((req, res) => res.sendFile(INDEX))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-app.use(express.static(path.join(__dirname, '../../build')));
-
-app.get('*', (req, res) => res.sendFile(`${__dirname}./index.html`));
+const io = socketIO(server);
 
 // handle incoming connections from clients
-io.sockets.on('connection', socket => {
+io.on('connection', socket => {
   // Put socket in game room
   socket.on('room', room => {
     console.log('joining room:', room);
@@ -25,6 +25,3 @@ io.sockets.on('connection', socket => {
     io.sockets.in(code).emit('message', data);
   });
 });
-
-console.log('Server listening on ', port);
-server.listen(port);
