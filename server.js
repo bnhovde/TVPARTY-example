@@ -28,7 +28,7 @@ io.on('connection', socket => {
 
   // Client disconnected
   socket.on('disconnect', (code, data) => {
-    const code = socket.rooms.slice(1);
-    io.sockets.in(code).emit('disconnect', data);
+    const roomCode = socket.rooms.slice(1);
+    io.sockets.in(roomCode).emit('disconnect', data);
   });
 });

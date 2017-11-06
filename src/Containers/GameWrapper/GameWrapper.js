@@ -57,7 +57,6 @@ class GameHost extends React.Component {
     return (
       <GameComponent
         gameData={gameData}
-        isHost={this.state.isHost}
         sendEvent={this.sendEvent}
         socket={this.socket}
         {...this.state}

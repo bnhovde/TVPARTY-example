@@ -26,9 +26,10 @@ The `GameWrapper` is a higher-order component that will provides the following p
 
 Props:
 ```
-gameData    - (Object)  All game data (real-time)
 isHost      - (Bool)    True if host, false if player
+gameData    - (Object)  All game data (real-time)
 gameCode    - (String)  4-digit game code
+socket      - (Object)  Socket.io object (for attaching event listeners)
 ```
 
 Events:
@@ -42,13 +43,20 @@ Post updates to firebase
 - data (Object) Data to store
 
 
-### `sendPlayerEvent(playerId, data)`
+### `sendEvent(data)`
 
-Send event from player (input changed etc)
+Send generic websocket event from player. (Events are sent to players in current room only!)
 
 #### Parameters
-- playerId (String) ID of player
-- data (Object) Data to store
+- data (Object) Data to send
+
+#### Example
+```
+    this.props.sendEvent({
+      type: 'submitClicked',
+      player: playerName,
+    });
+```
 
 
 ### `speak(message)`
@@ -57,12 +65,6 @@ Text-to-speech output with queuing built in using the native webSpeechAPI.
 
 #### Parameters
 - message (string) The text to read aloud
-
-```
-playerConnected(playerId)
-playerDisconnected(playerId)
-gameDataChanged()
-```
 
 
 #### Tips:
