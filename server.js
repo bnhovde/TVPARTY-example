@@ -23,12 +23,12 @@ io.on('connection', socket => {
 
   // Generic event from client to host
   socket.on('socket/WS_EVENT', (code, data) => {
-    io.sockets.in(code).emit('message', data);
+    io.sockets.in(code).emit('event', data);
   });
 
-  // Client disconnected
-  socket.on('disconnect', (code, data) => {
-    const roomCode = socket.rooms.slice(1);
-    io.sockets.in(roomCode).emit('disconnect', data);
-  });
+  // Client disconnected (WIP)
+  // socket.on('disconnect', (code, data) => {
+  //   const roomCode = socket.rooms.slice(1);
+  //   io.sockets.in(roomCode).emit('disconnect', data);
+  // });
 });

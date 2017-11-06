@@ -18,7 +18,7 @@ class SplashScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.socket.on('message', data => {
+    this.props.socket.on('event', data => {
       console.log('splash screen message!', data);
       if (data.type === 'speak') {
         this.props.speak(data.message);

@@ -11,14 +11,15 @@ npm start
 ```
 
 ## Creating a new game
-TVPARTY provides a few helper methods and events, but it's up to you to build your own games. Have a look at the example game for inspiration.
+TVPARTY provides a few helper methods and events, but it's up to you to build your own games. 
+
+> TIP: Have a look at the example game "Let's drink" for inspiration.
 
 To create a new game:
 - 1: Create a new folder in the `/Games` directory to hold your game logic.
 - 2: Add any static assets (images etc) to the `/public/assets/[gameName]` folder.
 - 3: Add your game to the `/Games/games.js` file to make it available to the app.
-- 4: Wrap your main game file in the `gameWrapper` component. (see API below)
-- 5: Go wild!
+- 4: Go wild!
 
 ## API
 
@@ -26,21 +27,32 @@ The `GameWrapper` is a higher-order component that will provides the following p
 
 Props:
 ```
-isHost      - (Bool)    True if host, false if player
-gameData    - (Object)  All game data (real-time)
-gameCode    - (String)  4-digit game code
-socket      - (Object)  Socket.io object (for attaching event listeners)
+isHost          - (Bool)    True if host, false if player
+gameData        - (Object)  All game data (real-time)
+gameCode        - (String)  4-digit game code
+currentPlayer   - (Object)  Current player data
+socket          - (Object)  Socket.io object (for attaching event listeners)
 ```
 
 Events:
 
-### `updateGameData(path, data)`
+### `updateGameData(gameCode, data)`
 
 Post updates to firebase
 
 #### Parameters
-- path (String) Path to the data to modify
-- data (Object) Data to store
+- path (String) gameCode to modify
+- data (Object) Data to store (replaces old data)
+
+
+### `updatePlayerData(gameCode, playerId, playerData)`
+
+Post updates to firebase
+
+#### Parameters
+- path (String) gameCode to modify
+- path (String) playerId to modify
+- data (Object) Data to store (replaces old data)
 
 
 ### `sendEvent(data)`
@@ -52,10 +64,18 @@ Send generic websocket event from player. (Events are sent to players in current
 
 #### Example
 ```
-    this.props.sendEvent({
-      type: 'submitClicked',
-      player: playerName,
-    });
+  // In gamepad.js (player controller)
+  this.props.sendEvent({
+    type: 'submitClicked',
+    player: playerName,
+  });
+
+  // In splash.js (A game host scene)
+  this.props.socket.on('event', data => {
+    if (data.type === 'submitClicked') {
+      console.log('submit clicked!', data);
+    }
+  };
 ```
 
 
@@ -65,6 +85,11 @@ Text-to-speech output with queuing built in using the native webSpeechAPI.
 
 #### Parameters
 - message (string) The text to read aloud
+
+#### Example
+```
+  this.props.speak(`${data.name} has joined the game!`);
+```
 
 
 #### Tips:
