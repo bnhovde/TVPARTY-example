@@ -16,15 +16,19 @@ server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
 // handle incoming connections from clients
 io.on('connection', socket => {
-  // Put socket in game room
+  // Put client in game room
   socket.on('room', room => {
-    console.log('joining room:', room);
     socket.join(room);
   });
 
-  // Generic event from client
+  // Generic event from client to host
   socket.on('socket/WS_EVENT', (code, data) => {
-    console.log('socket/WS_EVENT:', code);
     io.sockets.in(code).emit('message', data);
+  });
+
+  // Client disconnected
+  socket.on('disconnect', (code, data) => {
+    const code = socket.rooms.slice(1);
+    io.sockets.in(code).emit('disconnect', data);
   });
 });

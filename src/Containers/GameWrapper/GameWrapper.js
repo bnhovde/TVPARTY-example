@@ -47,7 +47,6 @@ class GameHost extends React.Component {
   }
 
   sendEvent(data) {
-    console.log('send event!');
     this.socket.emit('socket/WS_EVENT', this.state.gameCode, data);
   }
 
