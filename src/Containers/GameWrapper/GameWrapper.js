@@ -37,10 +37,10 @@ class GameHost extends React.Component {
 
   componentDidMount() {
     this.props.watchGame(this.state.gameCode);
+    const isDev = process.env.NODE_ENV === 'development';
 
-    // https://stackoverflow.com/a/38932078
     // Join websockets room
-    this.socket = io.connect(window.location.hostname);
+    this.socket = io.connect(`${window.location.hostname}${isDev && ':8080'}`);
     this.socket.on('connect', () => {
       this.socket.emit('room', this.state.gameCode);
     });
