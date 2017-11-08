@@ -2,7 +2,11 @@
 A framework for building multiplayer games for the TV.
 
 #### Demo
+<<<<<<< HEAD
 [https://tvparty-io.herokuapp.com/](https://tvparty-io.herokuapp.com/)
+=======
+[coming soon]
+>>>>>>> bb8b5194d65412310b022d94e6b65d176b58acdc
 
 ## Developing:
 ```
@@ -41,18 +45,32 @@ Events:
 Post updates to firebase
 
 #### Parameters
+<<<<<<< HEAD
 - gameCode (String) 4-digit code of game to modify
 - data (Object) Data object (replaces old data)
 
 
 ### `updatePlayerData(gameCode, playerId, data)`
+=======
+- path (String) gameCode to modify
+- data (Object) Data to store (replaces old data)
+
+
+### `updatePlayerData(gameCode, playerId, playerData)`
+>>>>>>> bb8b5194d65412310b022d94e6b65d176b58acdc
 
 Post updates to firebase
 
 #### Parameters
+<<<<<<< HEAD
 - gameCode (String) 4-digit code of game to modify
 - playerId (String) playerId to modify
 - data (Object) Data object (replaces old data)
+=======
+- path (String) gameCode to modify
+- path (String) playerId to modify
+- data (Object) Data to store (replaces old data)
+>>>>>>> bb8b5194d65412310b022d94e6b65d176b58acdc
 
 
 ### `sendEvent(data)`

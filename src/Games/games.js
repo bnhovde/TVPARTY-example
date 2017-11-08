@@ -15,6 +15,7 @@ export default [
     logo: 'logo.svg',
     active: true,
   },
+<<<<<<< HEAD
   {
     id: 'plommasPolse',
     main: 'PlommasPolse',
@@ -23,4 +24,6 @@ export default [
     logo: 'logo.svg',
     active: true,
   },
+=======
+>>>>>>> bb8b5194d65412310b022d94e6b65d176b58acdc
 ];

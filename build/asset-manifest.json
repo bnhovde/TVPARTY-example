@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "main.css": "static/css/main.52f90aca.css",
   "main.css.map": "static/css/main.52f90aca.css.map",
   "main.js": "static/js/main.8b0e3a58.js",
@@ -12,4 +13,10 @@
   "static/media/tick.mp3": "static/media/tick.d92eca9f.mp3",
   "static/media/wiener.png": "static/media/wiener.eab1a2c6.png",
   "static/media/win.mp3": "static/media/win.1768de81.mp3"
+=======
+  "main.css": "static/css/main.4fe16cd8.css",
+  "main.css.map": "static/css/main.4fe16cd8.css.map",
+  "main.js": "static/js/main.f99ecab7.js",
+  "main.js.map": "static/js/main.f99ecab7.js.map"
+>>>>>>> bb8b5194d65412310b022d94e6b65d176b58acdc
 }
