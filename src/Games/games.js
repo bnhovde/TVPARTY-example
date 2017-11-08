@@ -15,4 +15,12 @@ export default [
     logo: 'logo.svg',
     active: true,
   },
+  {
+    id: 'plommasPolse',
+    main: 'PlommasPolse',
+    name: 'Plommas Pølsespisekonkuranse!',
+    assets: 'plommasPolse',
+    logo: 'logo.svg',
+    active: true,
+  },
 ];
