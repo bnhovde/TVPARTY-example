@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import Screen from './../../../../Primitives/Screen';
+import { Screen } from './../../../../Primitives/Screen';
 import JoinGameForm from './../../../../Components/JoinGameForm';
 import ChatForm from './../../../../Components/ChatForm';
 import { H1, H2 } from './../../../../Primitives/H';
 import { Input } from '../../../../Primitives/Input';
 import { Button } from './../../../../Primitives/Button';
 import Block from './../../../../Primitives/Block';
-import Form from "../../../../Primitives/Form";
+import Form from '../../../../Primitives/Form';
 
 class GamePad extends Component {
   constructor(props) {
@@ -62,16 +62,16 @@ class GamePad extends Component {
 
     // Has game started
     let inputJsx = null;
-    if(playerLoaded) {
+    if (playerLoaded) {
       inputJsx = (
-          <Input
-              required
-              placeholder="Antall pølser"
-              value={sausageCount}
-              onChange={({ target }) => {
-                this.handleChange('sausageCount', target.value);
-              }}
-          />
+        <Input
+          required
+          placeholder="Antall pølser"
+          value={sausageCount}
+          onChange={({ target }) => {
+            this.handleChange('sausageCount', target.value);
+          }}
+        />
       );
     }
 
@@ -87,11 +87,11 @@ class GamePad extends Component {
               <Form>
                 <Screen>
                   <H1>Spis pølser!</H1>
-                  <Block top={2}>
-                    {inputJsx}
-                  </Block>
+                  <Block top={2}>{inputJsx}</Block>
                   <Block top={1}>
-                    <Button onClick={e => this.onSubmit(e, sausageCount)}>Start Game!</Button>
+                    <Button onClick={e => this.onSubmit(e, sausageCount)}>
+                      Start Game!
+                    </Button>
                   </Block>
                 </Screen>
               </Form>

@@ -4,9 +4,11 @@ import autoBind from 'react-autobind';
 // Components
 import { Screen } from './../../../Primitives/Screen';
 import HeaderBar from './../../../Components/HeaderBar';
-import { H1, H2 } from './../../../Primitives/H';
+import { H2 } from './../../../Primitives/H';
 import Block from './../../../Primitives/Block';
-import { Button } from './../../../Primitives/Button';
+import { TextBold } from './../../../Primitives/Text';
+import HeinoPeeker from './../Components/HeinoPeeker';
+import SpinningBeer from './../Components/SpinningBeer';
 
 // TEMP
 const greetings = ['Sweet!', 'himalaya', 'oh dear'];
@@ -36,14 +38,26 @@ class SplashScreen extends Component {
     const { players = {}, gameCode = '' } = this.props.gameData;
     return (
       <Screen>
-        <HeaderBar title="Let's drink!" gameCode={gameCode} />
+        <HeaderBar
+          title="Let's drink!"
+          subTitle="TVPARTY presents"
+          gameCode={gameCode}
+        />
         <Block top={1}>
           <H2>Connected players:</H2>
-          {Object.keys(players).map(p => <p key={p}>{players[p].name}</p>)}
         </Block>
-        <Block top={1}>
+        <Block top={0.5}>
+          {Object.keys(players).map(p => (
+            <div>
+              <TextBold key={p}>{players[p].name}</TextBold>
+            </div>
+          ))}
+        </Block>
+        <Block top={2}>
           <p>Press START once everyone is in!</p>
         </Block>
+        <SpinningBeer />
+        <HeinoPeeker />
       </Screen>
     );
   }

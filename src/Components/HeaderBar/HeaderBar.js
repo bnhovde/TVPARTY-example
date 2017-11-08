@@ -6,8 +6,22 @@
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { H1, H2 } from './../../Primitives/H';
+
+const shakeAnimation = keyframes`
+  0% { transform: translate(0); }
+  10% { transform: translate(-2px, -2px); }
+  20% { transform: translate(2px, -2px) rotate(1deg); }
+  30% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, 2px) rotate(-1deg); }
+  50% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, -2px); }
+  70% { transform: translate(-2px, 2px) rotate(1deg); }
+  80% { transform: translate(-2px, -2px) rotate(-1deg); }
+  90% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+`;
 
 const Wrapper = styled.header`
   display: flex;
@@ -15,9 +29,28 @@ const Wrapper = styled.header`
   justify-content: space-between;
 `;
 
+const Rotater = styled.div`
+  transform: rotate(-4deg);
+`;
+
+const Mover = styled.div`
+  animation: ${shakeAnimation} 10s ease infinite;
+`;
+
 const SmallText = styled.span`
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-family: 'Permanent Marker', cursive;
+`;
+
+const Circle = styled.div`
+  background: white;
+  border-radius: 50%;
+  height: 18vw;
+  width: 18vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const CodeText = H1.extend`
@@ -25,18 +58,22 @@ const CodeText = H1.extend`
 `;
 
 function HeaderBar(props) {
-  const { title = 'game name', gameCode = 'XXXX' } = props;
+  const { title = 'game name', gameCode = false, subTitle = 'Hi!' } = props;
 
   return (
     <Wrapper>
-      <div>
-        <SmallText>TVPARTY presents</SmallText>
-        <H1>{title}</H1>
-      </div>
-      <div>
-        <SmallText>Join with code:</SmallText>
-        <CodeText>{gameCode}</CodeText>
-      </div>
+      <Rotater>
+        <SmallText>{subTitle}</SmallText>
+        <Mover>
+          <H1>{title}</H1>
+        </Mover>
+      </Rotater>
+      {gameCode && (
+        <Circle>
+          <SmallText>Join with code:</SmallText>
+          <CodeText>{gameCode}</CodeText>
+        </Circle>
+      )}
     </Wrapper>
   );
 }

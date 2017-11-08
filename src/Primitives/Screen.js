@@ -20,6 +20,7 @@ const Screen = styled.section`
   display: block;
   padding: ${gutter.horizontal}vw;
   background: ${colors.primary};
+  min-height: 100vh;
 `;
 
 const AnimatedScreen = styled.section`

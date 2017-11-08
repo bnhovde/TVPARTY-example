@@ -6,7 +6,7 @@ import media from '../utilities/breakpoints';
 const { fontSizes, colors } = variables;
 
 const H1 = styled.h1`
-  font-size: ${fontSizes.h1.large};
+  font-size: ${fontSizes.h1.small};
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: 'Permanent Marker', cursive;
@@ -21,8 +21,7 @@ const H1 = styled.h1`
 
 const H2 = styled.h2`
   font-size: ${fontSizes.h2.small};
-  font-family: 'Comfortaa';
-  color: ${colors.textWeak};
+  font-family: 'Permanent Marker', cursive;
   margin: 0;
   line-height: 1.4;
   ${media.teen`

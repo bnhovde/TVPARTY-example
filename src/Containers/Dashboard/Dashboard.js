@@ -13,6 +13,7 @@ import games from './../../Games/games';
 
 // Components
 import { Input } from '../../Primitives/Input';
+import HeaderBar from './../../Components/HeaderBar';
 import Toggle from './../../Components/Toggle';
 import { H1 } from './../../Primitives/H';
 import { Button } from './../../Primitives/Button';
@@ -62,7 +63,7 @@ class Dashboard extends React.Component {
 
     return (
       <AnimatedScreen>
-        <H1>TVPARTY</H1>
+        <HeaderBar title="TVPARTY.IO" subTitle="Bring your friends!" />
 
         <Block top={1}>
           <p>Choose a game:</p>
