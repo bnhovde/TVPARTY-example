@@ -1,6 +1,15 @@
 {
-  "main.css": "static/css/main.4fe16cd8.css",
-  "main.css.map": "static/css/main.4fe16cd8.css.map",
-  "main.js": "static/js/main.f99ecab7.js",
-  "main.js.map": "static/js/main.f99ecab7.js.map"
+  "main.css": "static/css/main.52f90aca.css",
+  "main.css.map": "static/css/main.52f90aca.css.map",
+  "main.js": "static/js/main.8b0e3a58.js",
+  "main.js.map": "static/js/main.8b0e3a58.js.map",
+  "static/media/knack.ogg": "static/media/knack.513b2671.ogg",
+  "static/media/lose.mp3": "static/media/lose.915b8738.mp3",
+  "static/media/plomma_hake.png": "static/media/plomma_hake.28e9a874.png",
+  "static/media/plomma_hode.png": "static/media/plomma_hode.a082a88c.png",
+  "static/media/plonsters.ogg": "static/media/plonsters.7c34d7a1.ogg",
+  "static/media/sausages.jpg": "static/media/sausages.2e7f87b4.jpg",
+  "static/media/tick.mp3": "static/media/tick.d92eca9f.mp3",
+  "static/media/wiener.png": "static/media/wiener.eab1a2c6.png",
+  "static/media/win.mp3": "static/media/win.1768de81.mp3"
 }
