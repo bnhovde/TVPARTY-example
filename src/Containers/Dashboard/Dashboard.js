@@ -18,7 +18,7 @@ import { H1 } from './../../Primitives/H';
 import { Button } from './../../Primitives/Button';
 import Form from './../../Primitives/Form';
 import Block from './../../Primitives/Block';
-import Screen from './../../Primitives/Screen';
+import { AnimatedScreen } from './../../Primitives/Screen';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
     const { gameCode, gameType } = this.state.fields;
 
     return (
-      <Screen>
+      <AnimatedScreen>
         <H1>TVPARTY</H1>
 
         <Block top={1}>
@@ -102,7 +102,7 @@ class Dashboard extends React.Component {
             </Button>
           </Block>
         </Form>
-      </Screen>
+      </AnimatedScreen>
     );
   }
 }

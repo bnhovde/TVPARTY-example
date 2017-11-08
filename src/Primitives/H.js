@@ -6,12 +6,12 @@ import media from '../utilities/breakpoints';
 const { fontSizes, colors } = variables;
 
 const H1 = styled.h1`
-  font-size: ${props =>
-    props.large ? fontSizes.h1.large : fontSizes.h1.small};
+  font-size: ${fontSizes.h1.large};
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-weight: 700;
-  color: ${props => (props.color ? props.color : colors.text)};
+  font-family: 'Permanent Marker', cursive;
+  text-shadow: 5px 5px #000000;
+  color: white;
   margin: 0;
   line-height: 1.4;
   ${media.teen`
@@ -21,7 +21,7 @@ const H1 = styled.h1`
 
 const H2 = styled.h2`
   font-size: ${fontSizes.h2.small};
-  font-weight: 700;
+  font-family: 'Comfortaa';
   color: ${colors.textWeak};
   margin: 0;
   line-height: 1.4;

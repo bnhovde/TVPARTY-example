@@ -28,18 +28,17 @@ export default {
       large: '2.5rem',
     },
     h1: {
-      small: '1.5rem',
-      large: '2rem',
+      small: '2rem',
+      large: '5vw',
     },
     h2: {
-      small: '.8rem',
-      large: '1rem',
+      small: '1rem',
+      large: '1.5rem',
     },
   },
   colors: {
-    primary: '#171D1C',
+    primary: '#3FA7D6',
     secondary: '#00AC65',
-    third: '#068894',
     bad: '#e91e63',
     disabled: '#9E9E9E',
     bg: '#f1f1f1',

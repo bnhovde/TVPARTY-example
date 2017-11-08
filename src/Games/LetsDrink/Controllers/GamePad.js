@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import Screen from './../../../Primitives/Screen';
+import { Screen } from './../../../Primitives/Screen';
 import JoinGameForm from './../../../Components/JoinGameForm';
 import ChatForm from './../../../Components/ChatForm';
 import { H1, H2 } from './../../../Primitives/H';

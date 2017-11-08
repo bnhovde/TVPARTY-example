@@ -6,10 +6,8 @@ import variables from './../../constants/variables';
 import { H1 } from '../../Primitives/H';
 import { Input } from '../../Primitives/Input';
 import { Button } from '../../Primitives/Button';
-import Screen from './../../Primitives/Screen';
+import { Screen } from './../../Primitives/Screen';
 import Block from './../../Primitives/Block';
-
-const { colors } = variables;
 
 const Form = styled.form`
   display: flex;
