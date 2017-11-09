@@ -3,6 +3,7 @@ import autoBind from 'react-autobind';
 
 // Components
 import SplashScreen from './Screens/Splash';
+import GameScreen from './Screens/Game';
 import GamePad from './Controllers/GamePad';
 
 class LetsDrink extends Component {
@@ -10,6 +11,17 @@ class LetsDrink extends Component {
     super(props);
     autoBind(this);
     this.state = {};
+  }
+
+  componentDidMount() {
+    this.props.socket.on('event', data => {
+      if (data.type === 'start') {
+        this.props.updateGameData(this.props.gameData.gameCode, {
+          ...this.props.gameData,
+          screen: 'game',
+        });
+      }
+    });
   }
 
   handleAddPlayer(e, playerName) {
@@ -24,14 +36,22 @@ class LetsDrink extends Component {
   }
 
   render() {
-    const { players = {}, gameCode = '' } = this.props.gameData;
+    const {
+      players = {},
+      gameCode = '',
+      screen = 'splash',
+    } = this.props.gameData;
+
+    // For regular players, return the controller
+    if (!this.props.isHost) {
+      return <GamePad {...this.props} onAddPlayer={this.handleAddPlayer} />;
+    }
+
+    // Otherwise, return the current gameScreen
     return (
       <div>
-        {this.props.isHost ? (
-          <SplashScreen {...this.props} />
-        ) : (
-          <GamePad {...this.props} onAddPlayer={this.handleAddPlayer} />
-        )}
+        {screen === 'splash' && <SplashScreen {...this.props} />}
+        {screen === 'game' && <GameScreen {...this.props} />}
       </div>
     );
   }

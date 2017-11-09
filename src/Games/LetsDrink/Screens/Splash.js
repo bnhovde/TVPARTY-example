@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import { Screen } from './../../../Primitives/Screen';
+import { FullScreen } from './../../../Primitives/Screen';
 import HeaderBar from './../../../Components/HeaderBar';
 import { H2 } from './../../../Primitives/H';
 import Block from './../../../Primitives/Block';
@@ -34,13 +34,18 @@ class SplashScreen extends Component {
     });
   }
 
+  componentWillUnmount() {
+    // Remove event listeners
+    this.props.socket.off('event');
+  }
+
   render() {
     const { players = {}, gameCode = '' } = this.props.gameData;
     return (
-      <Screen>
+      <FullScreen>
         <HeaderBar
           title="Let's drink!"
-          subTitle="TVPARTY presents"
+          subTitle="Score points and become Heino"
           gameCode={gameCode}
         />
         <Block top={1}>
@@ -48,8 +53,8 @@ class SplashScreen extends Component {
         </Block>
         <Block top={0.5}>
           {Object.keys(players).map(p => (
-            <div>
-              <TextBold key={p}>{players[p].name}</TextBold>
+            <div key={p}>
+              <TextBold>{players[p].name}</TextBold>
             </div>
           ))}
         </Block>
@@ -58,7 +63,7 @@ class SplashScreen extends Component {
         </Block>
         <SpinningBeer />
         <HeinoPeeker />
-      </Screen>
+      </FullScreen>
     );
   }
 }

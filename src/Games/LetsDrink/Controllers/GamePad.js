@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import { Screen } from './../../../Primitives/Screen';
+import { FullScreen } from './../../../Primitives/Screen';
 import JoinGameForm from './../../../Components/JoinGameForm';
 import ChatForm from './../../../Components/ChatForm';
 import { H1, H2 } from './../../../Primitives/H';
@@ -29,6 +29,12 @@ class GamePad extends Component {
     });
   }
 
+  handleStartGame() {
+    this.props.sendEvent({
+      type: 'start',
+    });
+  }
+
   handleSendMessage(e) {
     e.preventDefault();
     this.props.sendEvent({
@@ -47,7 +53,7 @@ class GamePad extends Component {
     const { playerName, chatMessage } = this.state.fields;
     const { currentPlayer, playerLoaded, onAddPlayer } = this.props;
     return (
-      <Screen>
+      <FullScreen>
         {playerLoaded ? (
           <div>
             <H1>Hi, {currentPlayer.name}!</H1>
@@ -61,6 +67,9 @@ class GamePad extends Component {
                 onSubmit={this.handleSendMessage}
               />
             </Block>
+            <Block top={1}>
+              <Button onClick={this.handleStartGame}>Start game!</Button>
+            </Block>
           </div>
         ) : (
           <JoinGameForm
@@ -69,7 +78,7 @@ class GamePad extends Component {
             onSubmit={e => onAddPlayer(e, playerName)}
           />
         )}
-      </Screen>
+      </FullScreen>
     );
   }
 }

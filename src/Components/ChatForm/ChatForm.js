@@ -22,7 +22,7 @@ function ChatForm(props) {
   return (
     <Form onSubmit={onSubmit}>
       <Screen>
-        <Block top={1}>
+        <Block>
           <Input
             required
             placeholder="Enter chat message"

@@ -30,9 +30,7 @@ const Heino = styled.img`
   animation: ${peekAnimation} 10s 3s ease infinite;
 `;
 
-function HeinoPeeker(props) {
-  const { text = 'laster..' } = props;
-
+function HeinoPeeker() {
   return (
     <Wrapper>
       <Heino src={`${process.env.PUBLIC_URL}/assets/letsDrink/heino.svg`} />

@@ -16,11 +16,16 @@ const rainbow = keyframes`
 }
 `;
 
-const Screen = styled.section`
+const FullScreen = styled.section`
   display: block;
   padding: ${gutter.horizontal}vw;
   background: ${colors.primary};
   min-height: 100vh;
+`;
+
+const Screen = styled.section`
+  display: block;
+  padding: ${gutter.horizontal}vw;
 `;
 
 const AnimatedScreen = styled.section`
@@ -39,4 +44,4 @@ const AnimatedScreen = styled.section`
   animation: ${rainbow} 30s ease infinite;
 `;
 
-export { Screen, AnimatedScreen };
+export { Screen, FullScreen, AnimatedScreen };
