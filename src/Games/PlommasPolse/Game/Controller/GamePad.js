@@ -18,8 +18,17 @@ class GamePad extends Component {
     this.state = {
       fields: {
         userName: '',
+        gameStarted: false,
       },
     };
+
+    this.props.socket.on('event', data => {
+      if (data.type === 'gameStarted') {
+        this.setState({
+          gameStarted: true
+        })
+      }
+    });
   }
 
   onSubmit(e) {
@@ -62,7 +71,7 @@ class GamePad extends Component {
 
     // Has game started
     let inputJsx = null;
-    if(playerLoaded) {
+    if(playerLoaded && this.state.gameStarted) {
       inputJsx = (
           <Input
               required
@@ -81,7 +90,7 @@ class GamePad extends Component {
           <div>
             <H1>Hi, {currentPlayer.name}!</H1>
             <Block top={2}>
-              <p>Wait for other players to connect, then click start!</p>
+              <p>Click "Go!" when ready!</p>
             </Block>
             <Block top={2}>
               <Form>
@@ -91,7 +100,7 @@ class GamePad extends Component {
                     {inputJsx}
                   </Block>
                   <Block top={1}>
-                    <Button onClick={e => this.onSubmit(e, sausageCount)}>Start Game!</Button>
+                    <Button onClick={e => this.onSubmit(e, sausageCount)}>Go!</Button>
                   </Block>
                 </Screen>
               </Form>

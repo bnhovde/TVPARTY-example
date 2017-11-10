@@ -26,13 +26,19 @@ class PlommasPolse extends Component {
 
 
     if(isHost) {
+      let width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      let height= Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+
       // Initialize Pixi canvas
       const gameCanvasPlaceHolder = document.getElementById("gameCanvas");
-      const app = new PIXI.Application(1024, 800, {backgroundColor: 0x1099bb,  antialias: true });
+      const app = new PIXI.Application(width, height-5, {backgroundColor: 0x1099bb,  antialias: true });
+
       gameCanvasPlaceHolder.appendChild(app.view);
 
       this.game = new Game(app, {
         gameData,
+        socket: this.props.socket,
+        sendEvent: this.props.sendEvent,
       });
     }
   }
