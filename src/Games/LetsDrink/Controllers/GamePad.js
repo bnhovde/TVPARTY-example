@@ -35,6 +35,12 @@ class GamePad extends Component {
     });
   }
 
+  handleSpin() {
+    this.props.sendEvent({
+      type: 'spin',
+    });
+  }
+
   handleSendMessage(e) {
     e.preventDefault();
     this.props.sendEvent({
@@ -52,6 +58,7 @@ class GamePad extends Component {
   render() {
     const { playerName, chatMessage } = this.state.fields;
     const { currentPlayer, playerLoaded, onAddPlayer } = this.props;
+    const { screen = 'splash' } = this.props.gameData;
     return (
       <FullScreen>
         {playerLoaded ? (
@@ -68,7 +75,12 @@ class GamePad extends Component {
               />
             </Block>
             <Block top={1}>
-              <Button onClick={this.handleStartGame}>Start game!</Button>
+              {screen === 'splash' && (
+                <Button onClick={this.handleStartGame}>Start game!</Button>
+              )}
+              {screen === 'game' && (
+                <Button onClick={this.handleSpin}>Spin!</Button>
+              )}
             </Block>
           </div>
         ) : (

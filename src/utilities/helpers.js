@@ -17,4 +17,6 @@ const checkObjEmpty = function checkObjEmpty(object) {
   return Object.keys(object).length === 0 && object.constructor === Object;
 };
 
-export { generateGameCode, checkObjEmpty };
+const delay = time => new Promise(res => setTimeout(() => res(), time));
+
+export { generateGameCode, checkObjEmpty, delay };

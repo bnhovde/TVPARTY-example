@@ -26,7 +26,6 @@ function PlayerScores(props) {
   return (
     <Wrapper>
       <List>
-        <H2>Players</H2>
         {Object.keys(props.players).map(p => (
           <div key={p}>
             <TextBold>{props.players[p].name}</TextBold>

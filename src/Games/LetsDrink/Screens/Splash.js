@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
+import { Howl } from 'howler';
 
 // Components
 import { FullScreen } from './../../../Primitives/Screen';
@@ -21,20 +22,45 @@ class SplashScreen extends Component {
   }
 
   componentDidMount() {
+    // Play theme song
+    this.themeSong = new Howl({
+      src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/medley.mp3`],
+      loop: true,
+    });
+    this.themeSong.play();
+
     this.props.socket.on('event', data => {
-      console.log('splash screen message!', data);
       if (data.type === 'speak') {
-        this.props.speak(data.message);
+        // Fade the song, then speak
+        this.themeSong.fade(1, 0.2, 500);
+        this.themeSong.once('fade', () => {
+          this.props.speak(data.message);
+          setTimeout(() => {
+            this.themeSong.fade(0.2, 1, 500);
+          }, 3000);
+        });
       }
       if (data.type === 'greetPlayer') {
         const randomGreeting =
           greetings[Math.floor(Math.random() * greetings.length)];
-        this.props.speak(`${data.name} has joined the game! ${randomGreeting}`);
+        // Fade the song, then speak
+        this.themeSong.fade(1, 0.2, 500);
+        this.themeSong.once('fade', () => {
+          this.props.speak(
+            `${data.name} has joined the game! ${randomGreeting}`,
+          );
+          setTimeout(() => {
+            this.themeSong.fade(0.2, 1, 500);
+          }, 2000);
+        });
       }
     });
   }
 
   componentWillUnmount() {
+    // Stop all sounds
+    this.themeSong.stop();
+
     // Remove event listeners
     this.props.socket.off('event');
   }
