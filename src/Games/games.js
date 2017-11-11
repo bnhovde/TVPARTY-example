@@ -18,9 +18,9 @@ export default [
   {
     id: 'plommasPolse',
     main: 'PlommasPolse',
-    name: 'Plommas Pølsespisekonkuranse!',
+    name: 'Plommas Pølse',
     assets: 'plommasPolse',
-    logo: 'logo.svg',
+    logo: 'logo.png',
     active: true,
   },
 ];
