@@ -29,18 +29,33 @@ class GameScreen extends Component {
 
   componentDidMount() {
     // Define sounds
-    this.spinSound = new Howl({
-      src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/wheel-spin.wav`],
-    });
-    this.cheer = new Howl({
-      src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/cheer.wav`],
-    });
-    this.themeSong = new Howl({
-      src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/medley.mp3`],
-      loop: true,
-    });
-    this.cheer.play();
-    this.themeSong.play();
+    this.sounds = {
+      themeSong: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/medley.mp3`],
+        loop: true,
+      }),
+      spinSound: new Howl({
+        src: [
+          `${process.env.PUBLIC_URL}/assets/letsDrink/sounds/wheel-spin.wav`,
+        ],
+      }),
+      cheer: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/cheer.wav`],
+      }),
+      beerSound: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/beer.m4a`],
+      }),
+      beerOpenSound: new Howl({
+        src: [
+          `${process.env.PUBLIC_URL}/assets/letsDrink/sounds/beer-open.wav`,
+        ],
+      }),
+      cashSound: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/cash.wav`],
+      }),
+    };
+    this.sounds.cheer.play();
+    this.sounds.themeSong.play();
 
     this.props.socket.on('event', data => {
       if (data.type === 'spin') {
@@ -51,7 +66,7 @@ class GameScreen extends Component {
 
   componentWillUnmount() {
     // Stop all sounds
-    this.themeSong.stop();
+    this.sounds.themeSong.stop();
 
     // Remove event listeners
     this.props.socket.off('event');
@@ -72,10 +87,31 @@ class GameScreen extends Component {
     })();
   }
 
+  awardPrize(prize) {
+    let sound;
+    switch (prize) {
+      case '5p':
+      case '25p':
+      case '100p':
+        sound = 'cashSound';
+        break;
+      case 'beerx5':
+        sound = 'beerSound';
+        break;
+      case 'star':
+      case 'shades':
+        sound = 'cheer';
+        break;
+      default:
+        sound = 'beerOpenSound';
+    }
+    this.sounds[sound].play();
+    this.notify(`You win a ${prize}`);
+  }
+
   spin() {
-    this.spinSound.play();
+    this.sounds.spinSound.play();
     const randomDegree = Math.floor(Math.random() * (3000 - (300 + 1))) + 300;
-    // const randomDegree = 22;
     this.props.updateGameData(this.props.gameData.gameCode, {
       ...this.props.gameData,
       spinRotation: randomDegree,
@@ -87,12 +123,13 @@ class GameScreen extends Component {
       degree -= 360;
     }
     const prizeIndex = Math.round(degree / sliceDegree) + 1;
-    const price = items[items.length - prizeIndex];
+    const index = prizeIndex === 17 ? 15 : prizeIndex;
+    const prize = items[items.length - index];
 
     // Notify user
     (async () => {
-      await delay(3000);
-      this.notify(`You win a ${price}`);
+      await delay(3200);
+      this.awardPrize(prize);
     })();
   }
 
