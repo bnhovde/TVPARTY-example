@@ -23,14 +23,17 @@ const List = styled.div`
 `;
 
 function PlayerScores(props) {
+  const { players = {} } = props;
   return (
     <Wrapper>
       <List>
-        {Object.keys(props.players).map(p => (
-          <div key={p}>
-            <TextBold>{props.players[p].name}</TextBold>
-          </div>
-        ))}
+        {Object.keys(players)
+          .filter(p => !players[p].inactive)
+          .map(p => (
+            <div key={p}>
+              <TextBold>{players[p].name}</TextBold>
+            </div>
+          ))}
       </List>
     </Wrapper>
   );

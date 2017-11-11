@@ -78,11 +78,13 @@ class SplashScreen extends Component {
           <H2>Connected players:</H2>
         </Block>
         <Block top={0.5}>
-          {Object.keys(players).map(p => (
-            <div key={p}>
-              <TextBold>{players[p].name}</TextBold>
-            </div>
-          ))}
+          {Object.keys(players)
+            .filter(p => !players[p].inactive)
+            .map(p => (
+              <div key={p}>
+                <TextBold>{players[p].name}</TextBold>
+              </div>
+            ))}
         </Block>
         <Block top={2}>
           <p>Press START once everyone is in!</p>

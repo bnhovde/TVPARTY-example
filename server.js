@@ -15,21 +15,25 @@ app.get('*', function(req, res) {
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
+const allClients = new WeakMap();
+
 // handle incoming connections from clients
 io.on('connection', socket => {
-  // Put client in game room
-  socket.on('room', room => {
-    socket.join(room);
+  // Client has joined a room
+  socket.on('join game', data => {
+    socket.join(data.gameCode);
+    allClients.set(socket, data);
   });
 
-  // Generic event from client to host
+  // Client has sent generic event
   socket.on('socket/WS_EVENT', (code, data) => {
     io.sockets.in(code).emit('event', data);
   });
 
-  // Client disconnected (WIP)
-  // socket.on('disconnect', (code, data) => {
-  //   const roomCode = socket.rooms.slice(1);
-  //   io.sockets.in(roomCode).emit('disconnect', data);
-  // });
+  // Client has disconnected
+  socket.on('disconnect', () => {
+    const client = allClients.get(socket);
+    io.sockets.in(client.gameCode).emit('player left game', client);
+    allClients.delete(socket);
+  });
 });

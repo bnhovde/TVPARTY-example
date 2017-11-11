@@ -14,6 +14,7 @@ class LetsDrink extends Component {
   }
 
   componentDidMount() {
+    // Generic event handlers
     this.props.socket.on('event', data => {
       if (data.type === 'start') {
         this.props.updateGameData(this.props.gameData.gameCode, {
@@ -22,13 +23,31 @@ class LetsDrink extends Component {
         });
       }
     });
+
+    // Player has left game, set as inactive
+    this.props.socket.on('player left game', data => {
+      console.log('player left game', data);
+      const { players } = this.props.gameData;
+      const playerId = Object.keys(players).find(
+        p => players[p].socketId === data.socketId,
+      );
+      this.props.updatePlayerData(this.props.gameData.gameCode, playerId, {
+        ...players[playerId],
+        inactive: true,
+      });
+    });
   }
 
   handleAddPlayer(e, playerName) {
     e.preventDefault();
+    // Add player data to firebase (through redux)
     this.props.addPlayer(this.props.gameData.gameCode, {
       name: playerName || 'Unknown player',
+      socketId: this.props.socket.id,
     });
+
+    // Add player data to
+
     this.props.sendEvent({
       type: 'greetPlayer',
       name: playerName,
