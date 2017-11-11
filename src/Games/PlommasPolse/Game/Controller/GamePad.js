@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import { Screen } from './../../../../Primitives/Screen';
+import { Screen, FullScreen } from './../../../../Primitives/Screen';
 import JoinGameForm from './../../../../Components/JoinGameForm';
 import ChatForm from './../../../../Components/ChatForm';
 import { H1, H2 } from './../../../../Primitives/H';
@@ -76,7 +76,7 @@ class GamePad extends Component {
     }
 
     return (
-      <Screen>
+      <FullScreen>
         {playerLoaded ? (
           <div>
             <H1>Hi, {currentPlayer.name}!</H1>
@@ -104,7 +104,7 @@ class GamePad extends Component {
             onSubmit={e => onAddPlayer(e, playerName)}
           />
         )}
-      </Screen>
+      </FullScreen>
     );
   }
 }
