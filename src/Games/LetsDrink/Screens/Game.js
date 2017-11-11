@@ -109,6 +109,8 @@ class GameScreen extends Component {
     let sound;
     let points = false;
     let drinks = false;
+    let shades = false;
+    let hair = false;
     switch (prize) {
       case '5p':
         sound = 'cashSound';
@@ -123,15 +125,19 @@ class GameScreen extends Component {
         points = 100;
         break;
       case 'beerx1':
-        sound = 'beerSound';
+        sound = 'beerOpenSound';
         drinks = 1;
         break;
       case 'beerx5':
         sound = 'beerSound';
         drinks = 5;
         break;
-      case 'star':
+      case 'hair':
+        hair = true;
+        sound = 'cheer';
+        break;
       case 'shades':
+        shades = true;
         sound = 'cheer';
         break;
       default:
@@ -147,7 +153,7 @@ class GameScreen extends Component {
     if (points) {
       const currentPoints = player.points || 0;
       this.props.updatePlayerData(this.props.gameData.gameCode, playersTurn, {
-        ...players[playersTurn],
+        ...player,
         points: currentPoints + points,
       });
     }
@@ -155,8 +161,22 @@ class GameScreen extends Component {
     if (drinks) {
       const currentDrinks = player.drinks || 0;
       this.props.updatePlayerData(this.props.gameData.gameCode, playersTurn, {
-        ...players[playersTurn],
+        ...player,
         drinks: currentDrinks + drinks,
+      });
+    }
+
+    if (shades) {
+      this.props.updateGameData(this.props.gameData.gameCode, {
+        ...this.props.gameData,
+        playerWithShades: playersTurn,
+      });
+    }
+
+    if (hair) {
+      this.props.updateGameData(this.props.gameData.gameCode, {
+        ...this.props.gameData,
+        playerWithHair: playersTurn,
       });
     }
   }
@@ -204,6 +224,8 @@ class GameScreen extends Component {
       gameCode = '',
       spinRotation,
       playersTurn,
+      playerWithShades,
+      playerWithHair,
     } = this.props.gameData;
     const { alertData, isSpinning } = this.state;
     return (
@@ -215,7 +237,12 @@ class GameScreen extends Component {
         />
         <Block>
           <Message data={alertData} />
-          <PlayerScores players={players} playersTurn={playersTurn} />
+          <PlayerScores
+            players={players}
+            playersTurn={playersTurn}
+            playerWithShades={playerWithShades}
+            playerWithHair={playerWithHair}
+          />
           <Spinner rotation={spinRotation} />
           <HeinoFull isSpinning={isSpinning} />
         </Block>

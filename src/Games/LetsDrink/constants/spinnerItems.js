@@ -3,7 +3,7 @@ const items = [
   '5p',
   'beerx1',
   '25p',
-  'star',
+  'hair',
   'beerx5',
   'beerx1',
   '100p',
