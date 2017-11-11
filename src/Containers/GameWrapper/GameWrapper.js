@@ -15,6 +15,7 @@ import {
   updatePlayerData,
   currentPlayer,
   playerDataLoaded,
+  addPlayerSuccess,
 } from './../../store/players';
 import { speak } from './../../store/audio';
 
@@ -32,6 +33,7 @@ class GameHost extends React.Component {
     this.state = {
       isHost: this.props.match.path.includes('/host'),
       gameCode: this.props.match.params.gameCode,
+      socketReady: false,
     };
   }
 
@@ -42,7 +44,14 @@ class GameHost extends React.Component {
     // Join websockets room
     this.socket = io.connect(`${window.location.hostname}${socketPort}`);
     this.socket.on('connect', () => {
-      this.socket.emit('room', this.state.gameCode);
+      this.setState({
+        socketReady: true,
+      });
+      this.socket.emit('join game', {
+        gameCode: this.state.gameCode,
+        isHost: this.state.isHost,
+        socketId: this.socket.id,
+      });
     });
   }
 
@@ -66,7 +75,8 @@ class GameHost extends React.Component {
   }
 
   render() {
-    return <div>{!this.props.gameLoaded ? <Loader /> : this.renderGame()}</div>;
+    const isLoading = !this.state.socketReady || !this.props.gameLoaded;
+    return <div>{isLoading ? <Loader /> : this.renderGame()}</div>;
   }
 }
 
@@ -93,6 +103,7 @@ function mapStateToProps(state) {
       state.games.currentGame,
       state.players.currentPlayer,
     ),
+    currentPlayerId: state.players.currentPlayer,
     playerLoaded: playerDataLoaded(state.players),
     gameLoaded: singleGameLoaded(state.games),
   };
@@ -108,6 +119,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(updatePlayerData(gameCode, playerId, playerData)),
     updateGameData: (gameCode, gameData) =>
       dispatch(updateGameData(gameCode, gameData)),
+    setCurrentPlayer: playerId => dispatch(addPlayerSuccess(playerId)),
   };
 }
 

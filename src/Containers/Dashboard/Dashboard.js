@@ -13,12 +13,13 @@ import games from './../../Games/games';
 
 // Components
 import { Input } from '../../Primitives/Input';
+import HeaderBar from './../../Components/HeaderBar';
 import Toggle from './../../Components/Toggle';
 import { H1 } from './../../Primitives/H';
 import { Button } from './../../Primitives/Button';
 import Form from './../../Primitives/Form';
 import Block from './../../Primitives/Block';
-import Screen from './../../Primitives/Screen';
+import { AnimatedScreen } from './../../Primitives/Screen';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -61,8 +62,32 @@ class Dashboard extends React.Component {
     const { gameCode, gameType } = this.state.fields;
 
     return (
-      <Screen>
-        <H1>TVPARTY</H1>
+      <AnimatedScreen>
+        <HeaderBar title="TVPARTY.IO" subTitle="Bring your friends!" />
+
+        <Block top={2}>
+          <Form onSubmit={this.handleJoinGame}>
+            <Block top={0.5} left={0.5} right={0.5}>
+              <Input
+                required
+                placeholder="Enter code (4 letters)"
+                value={gameCode}
+                onChange={({ target }) => {
+                  this.handleChange('gameCode', target.value);
+                }}
+              />
+            </Block>
+            <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
+              <Button type="submit" disabled={gameCode.length !== 4}>
+                Join Game!
+              </Button>
+            </Block>
+          </Form>
+        </Block>
+
+        <Block top={1} align="center">
+          <p>– OR –</p>
+        </Block>
 
         <Block top={1}>
           <p>Choose a game:</p>
@@ -80,29 +105,7 @@ class Dashboard extends React.Component {
         <Block top={1}>
           <Button onClick={() => this.startNewGame()}>Start new game</Button>
         </Block>
-
-        <Block top={1} bottom={1} align="center">
-          <p>– OR –</p>
-        </Block>
-
-        <Form onSubmit={this.handleJoinGame}>
-          <Block top={1} left={0.5} right={0.5}>
-            <Input
-              required
-              placeholder="Enter code (4 letters)"
-              value={gameCode}
-              onChange={({ target }) => {
-                this.handleChange('gameCode', target.value);
-              }}
-            />
-          </Block>
-          <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
-            <Button type="submit" disabled={gameCode.length !== 4}>
-              Join Game!
-            </Button>
-          </Block>
-        </Form>
-      </Screen>
+      </AnimatedScreen>
     );
   }
 }

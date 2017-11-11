@@ -8,9 +8,7 @@ import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import variables from './../../constants/variables';
 
-const {
-  colors,
-} = variables;
+const { colors } = variables;
 
 const Wrapper = styled.span`
   display: inline-block;
@@ -26,20 +24,12 @@ const Wrapper = styled.span`
   text-align: center;
 `;
 
-
 function Pill(props) {
-  return (
-    <Wrapper>
-      {props.text}
-    </Wrapper>
-  );
+  return <Wrapper>{props.text}</Wrapper>;
 }
 
 Pill.propTypes = {
-  text: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default Pill;

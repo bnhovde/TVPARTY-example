@@ -6,10 +6,8 @@ import variables from './../../constants/variables';
 import { H1 } from '../../Primitives/H';
 import { Input } from '../../Primitives/Input';
 import { Button } from '../../Primitives/Button';
-import Screen from './../../Primitives/Screen';
+import { FullScreen } from './../../Primitives/Screen';
 import Block from './../../Primitives/Block';
-
-const { colors } = variables;
 
 const Form = styled.form`
   display: flex;
@@ -31,7 +29,7 @@ function JoinGameForm(props) {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Screen>
+      <FullScreen>
         <H1>Join the action!</H1>
         <Block top={2}>
           <Input
@@ -46,7 +44,7 @@ function JoinGameForm(props) {
         <Block top={1}>
           <Button type="submit">Join Game!</Button>
         </Block>
-      </Screen>
+      </FullScreen>
     </Form>
   );
 }

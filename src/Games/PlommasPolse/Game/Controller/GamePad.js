@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
 // Components
-import Screen from './../../../../Primitives/Screen';
+import { Screen, FullScreen } from './../../../../Primitives/Screen';
 import JoinGameForm from './../../../../Components/JoinGameForm';
 import ChatForm from './../../../../Components/ChatForm';
 import { H1, H2 } from './../../../../Primitives/H';
 import { Input } from '../../../../Primitives/Input';
 import { Button } from './../../../../Primitives/Button';
 import Block from './../../../../Primitives/Block';
-import Form from "../../../../Primitives/Form";
+import Form from '../../../../Primitives/Form';
 
 class GamePad extends Component {
   constructor(props) {
@@ -73,19 +73,19 @@ class GamePad extends Component {
     let inputJsx = null;
     if(playerLoaded && this.state.gameStarted) {
       inputJsx = (
-          <Input
-              required
-              placeholder="Antall pølser"
-              value={sausageCount}
-              onChange={({ target }) => {
-                this.handleChange('sausageCount', target.value);
-              }}
-          />
+        <Input
+          required
+          placeholder="Antall pølser"
+          value={sausageCount}
+          onChange={({ target }) => {
+            this.handleChange('sausageCount', target.value);
+          }}
+        />
       );
     }
 
     return (
-      <Screen>
+      <FullScreen>
         {playerLoaded ? (
           <div>
             <H1>Hi, {currentPlayer.name}!</H1>
@@ -113,7 +113,7 @@ class GamePad extends Component {
             onSubmit={e => onAddPlayer(e, playerName)}
           />
         )}
-      </Screen>
+      </FullScreen>
     );
   }
 }
