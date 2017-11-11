@@ -20,6 +20,7 @@ class GameScreen extends Component {
     super(props);
     autoBind(this);
     this.state = {
+      isSpinning: false,
       alertData: {
         visible: false,
         message: '',
@@ -161,6 +162,7 @@ class GameScreen extends Component {
   }
 
   spin() {
+    this.setState({ isSpinning: true });
     this.sounds.spinSound.play();
     const randomDegree = Math.floor(Math.random() * (3000 - (300 + 1))) + 300;
     this.props.updateGameData(this.props.gameData.gameCode, {
@@ -177,7 +179,13 @@ class GameScreen extends Component {
     const index = prizeIndex === 17 ? 15 : prizeIndex;
     const prize = items[items.length - index];
 
-    // Notify user
+    // Stop heino animation
+    (async () => {
+      await delay(1000);
+      this.setState({ isSpinning: false });
+    })();
+
+    // Notify user of prize
     (async () => {
       await delay(3200);
       this.awardPrize(prize);
@@ -197,7 +205,7 @@ class GameScreen extends Component {
       spinRotation,
       playersTurn,
     } = this.props.gameData;
-    const { alertData } = this.state;
+    const { alertData, isSpinning } = this.state;
     return (
       <FullScreen>
         <HeaderBar
@@ -209,7 +217,7 @@ class GameScreen extends Component {
           <Message data={alertData} />
           <PlayerScores players={players} playersTurn={playersTurn} />
           <Spinner rotation={spinRotation} />
-          <HeinoFull />
+          <HeinoFull isSpinning={isSpinning} />
         </Block>
       </FullScreen>
     );

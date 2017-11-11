@@ -33,6 +33,7 @@ class GameHost extends React.Component {
     this.state = {
       isHost: this.props.match.path.includes('/host'),
       gameCode: this.props.match.params.gameCode,
+      socketReady: false,
     };
   }
 
@@ -43,6 +44,9 @@ class GameHost extends React.Component {
     // Join websockets room
     this.socket = io.connect(`${window.location.hostname}${socketPort}`);
     this.socket.on('connect', () => {
+      this.setState({
+        socketReady: true,
+      });
       this.socket.emit('join game', {
         gameCode: this.state.gameCode,
         isHost: this.state.isHost,
@@ -71,7 +75,8 @@ class GameHost extends React.Component {
   }
 
   render() {
-    return <div>{!this.props.gameLoaded ? <Loader /> : this.renderGame()}</div>;
+    const isLoading = !this.state.socketReady || !this.props.gameLoaded;
+    return <div>{isLoading ? <Loader /> : this.renderGame()}</div>;
   }
 }
 

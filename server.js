@@ -34,6 +34,10 @@ io.on('connection', socket => {
   // Client has disconnected
   socket.on('disconnect', () => {
     const client = allClients.get(socket);
+    // Return if player hasn't joined a room yet
+    if (client === undefined) {
+      return;
+    }
     io.sockets.in(client.gameCode).emit('player left game', client);
     allClients.delete(socket);
   });

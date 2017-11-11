@@ -45,7 +45,7 @@ class LetsDrink extends Component {
     // Player has left game, set as inactive
     this.props.socket.on('player left game', data => {
       console.log('player left game', data);
-      const { players } = this.props.gameData;
+      const { players = {} } = this.props.gameData;
       const playerId = Object.keys(players).find(
         p => players[p].socketId === data.socketId,
       );

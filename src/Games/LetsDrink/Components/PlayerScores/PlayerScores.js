@@ -29,13 +29,14 @@ const Card = styled.div`
   transform: scale(${props => (props.active ? '2' : '1')});
 `;
 
-const Indicator = styled.img`
+const Indicator = styled.span`
   display: block;
   position: absolute;
   left: -20px;
   width: 15px;
   top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
+  font-family: 'Permanent Marker', cursive;
+  transform: translateY(-50%);
 `;
 
 const ScoreText = styled.span`
@@ -53,11 +54,7 @@ function PlayerScores(props) {
           .filter(p => !players[p].inactive)
           .map(p => (
             <Card key={p} active={playersTurn === p}>
-              {playersTurn === p && (
-                <Indicator
-                  src={`${process.env.PUBLIC_URL}/assets/letsDrink/arrow.svg`}
-                />
-              )}
+              {playersTurn === p && <Indicator>&gt;</Indicator>}
               <TextBold>{players[p].name}</TextBold>
               <ScoreText> ({players[p].points || 0})</ScoreText>
             </Card>
