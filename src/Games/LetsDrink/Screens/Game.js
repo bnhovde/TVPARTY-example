@@ -106,14 +106,28 @@ class GameScreen extends Component {
 
   awardPrize(prize) {
     let sound;
+    let points = false;
+    let drinks = false;
     switch (prize) {
       case '5p':
+        sound = 'cashSound';
+        points = 5;
+        break;
       case '25p':
+        sound = 'cashSound';
+        points = 25;
+        break;
       case '100p':
         sound = 'cashSound';
+        points = 100;
+        break;
+      case 'beerx1':
+        sound = 'beerSound';
+        drinks = 1;
         break;
       case 'beerx5':
         sound = 'beerSound';
+        drinks = 5;
         break;
       case 'star':
       case 'shades':
@@ -123,7 +137,27 @@ class GameScreen extends Component {
         sound = 'beerOpenSound';
     }
     this.sounds[sound].play();
-    this.notify(`You win a ${prize}`);
+
+    // Award prize
+    const { players, playersTurn } = this.props.gameData;
+    const player = players[playersTurn];
+    this.notify(`${player.name} wins ${prize}`);
+
+    if (points) {
+      const currentPoints = player.points || 0;
+      this.props.updatePlayerData(this.props.gameData.gameCode, playersTurn, {
+        ...players[playersTurn],
+        points: currentPoints + points,
+      });
+    }
+
+    if (drinks) {
+      const currentDrinks = player.drinks || 0;
+      this.props.updatePlayerData(this.props.gameData.gameCode, playersTurn, {
+        ...players[playersTurn],
+        drinks: currentDrinks + drinks,
+      });
+    }
   }
 
   spin() {

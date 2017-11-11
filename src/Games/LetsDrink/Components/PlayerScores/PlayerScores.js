@@ -38,6 +38,12 @@ const Indicator = styled.img`
   transform: translateY(-50%) rotate(-90deg);
 `;
 
+const ScoreText = styled.span`
+  display: inline-block;
+  font-family: 'Permanent Marker', cursive;
+  margin-left: 10px;
+`;
+
 function PlayerScores(props) {
   const { players = {}, playersTurn } = props;
   return (
@@ -53,6 +59,7 @@ function PlayerScores(props) {
                 />
               )}
               <TextBold>{players[p].name}</TextBold>
+              <ScoreText> ({players[p].points || 0})</ScoreText>
             </Card>
           ))}
       </List>
