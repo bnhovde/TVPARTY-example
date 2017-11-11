@@ -31,6 +31,7 @@ isHost          - (Bool)    True if host, false if player
 gameData        - (Object)  All game data (real-time)
 gameCode        - (String)  4-digit game code
 currentPlayer   - (Object)  Current player data
+currentPlayerId - (String)  Current player id
 socket          - (Object)  Socket.io object (for attaching event listeners)
 ```
 

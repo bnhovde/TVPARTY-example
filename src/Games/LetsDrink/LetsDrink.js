@@ -20,7 +20,7 @@ class LetsDrink extends Component {
     // Check if player is already in game
     const state = loadState();
     const activeGame = state.currentGame === this.props.gameData.gameCode;
-    if (activeGame) {
+    if (activeGame && !this.props.isHost) {
       const { players } = this.props.gameData;
       const playerId = Object.keys(players).find(
         p => players[p].name === state.playerName,
@@ -49,10 +49,12 @@ class LetsDrink extends Component {
       const playerId = Object.keys(players).find(
         p => players[p].socketId === data.socketId,
       );
-      this.props.updatePlayerData(this.props.gameData.gameCode, playerId, {
-        ...players[playerId],
-        inactive: true,
-      });
+      if (playerId) {
+        this.props.updatePlayerData(this.props.gameData.gameCode, playerId, {
+          ...players[playerId],
+          inactive: true,
+        });
+      }
     });
   }
 

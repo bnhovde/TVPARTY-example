@@ -98,6 +98,7 @@ function mapStateToProps(state) {
       state.games.currentGame,
       state.players.currentPlayer,
     ),
+    currentPlayerId: state.players.currentPlayer,
     playerLoaded: playerDataLoaded(state.players),
     gameLoaded: singleGameLoaded(state.games),
   };

@@ -57,6 +57,9 @@ class GameScreen extends Component {
     this.sounds.cheer.play();
     this.sounds.themeSong.play();
 
+    // Set current player
+    this.nextPlayer();
+
     this.props.socket.on('event', data => {
       if (data.type === 'spin') {
         this.spin();
@@ -70,6 +73,20 @@ class GameScreen extends Component {
 
     // Remove event listeners
     this.props.socket.off('event');
+  }
+
+  // Change player turn
+  nextPlayer() {
+    const currentPlayer = this.props.gameData.playersTurn;
+    const playerKeys = Object.keys(this.props.gameData.players);
+    const current = playerKeys.indexOf(currentPlayer);
+    const nextIndex = playerKeys[current + 1]
+      ? playerKeys[current + 1]
+      : playerKeys[0];
+    this.props.updateGameData(this.props.gameData.gameCode, {
+      ...this.props.gameData,
+      playersTurn: nextIndex,
+    });
   }
 
   notify(message) {
@@ -131,10 +148,21 @@ class GameScreen extends Component {
       await delay(3200);
       this.awardPrize(prize);
     })();
+
+    // Change player
+    (async () => {
+      await delay(4200);
+      this.nextPlayer(prize);
+    })();
   }
 
   render() {
-    const { players = {}, gameCode = '', spinRotation } = this.props.gameData;
+    const {
+      players = {},
+      gameCode = '',
+      spinRotation,
+      playersTurn,
+    } = this.props.gameData;
     const { alertData } = this.state;
     return (
       <FullScreen>
@@ -145,7 +173,7 @@ class GameScreen extends Component {
         />
         <Block>
           <Message data={alertData} />
-          <PlayerScores players={players} currentPlayer={players[0]} />
+          <PlayerScores players={players} playersTurn={playersTurn} />
           <Spinner rotation={spinRotation} />
           <HeinoFull />
         </Block>

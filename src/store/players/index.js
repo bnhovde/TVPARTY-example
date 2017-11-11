@@ -92,6 +92,7 @@ export function addPlayer(gameCode, playerData) {
       .then(response => {
         // Persist current game to localstore
         saveState({
+          id: response.key,
           currentGame: gameCode,
           playerName: playerData.name,
         });

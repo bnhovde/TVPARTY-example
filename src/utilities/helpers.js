@@ -9,6 +9,14 @@ const generateGameCode = function generateGameCode() {
 };
 
 /**
+ * @param   {object} Object to process
+ * @returns {string} First key of object
+ */
+const firstObjKey = function firstObjKey(object) {
+  return Object.keys(object)[0];
+};
+
+/**
  * @desc    Checks if object is empty
  * @param   {object} Object to process
  * @returns {bool} true if empty
@@ -19,4 +27,4 @@ const checkObjEmpty = function checkObjEmpty(object) {
 
 const delay = time => new Promise(res => setTimeout(() => res(), time));
 
-export { generateGameCode, checkObjEmpty, delay };
+export { generateGameCode, firstObjKey, checkObjEmpty, delay };
