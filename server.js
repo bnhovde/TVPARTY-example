@@ -23,6 +23,7 @@ io.on('connection', socket => {
   socket.on('join game', data => {
     socket.join(data.gameCode);
     allClients.set(socket, data);
+    io.sockets.in(data.gameCode).emit('player joined game', data);
   });
 
   // Client has sent generic event

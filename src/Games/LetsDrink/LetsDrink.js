@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 
+// Helpers
+import { loadState } from './../../utilities/localstorage';
+
 // Components
 import SplashScreen from './Screens/Splash';
 import GameScreen from './Screens/Game';
@@ -14,6 +17,21 @@ class LetsDrink extends Component {
   }
 
   componentDidMount() {
+    // Check if player is already in game
+    const state = loadState();
+    const activeGame = state.currentGame === this.props.gameData.gameCode;
+    if (activeGame) {
+      const { players } = this.props.gameData;
+      const playerId = Object.keys(players).find(
+        p => players[p].name === state.playerName,
+      );
+      this.props.updatePlayerData(this.props.gameData.gameCode, playerId, {
+        ...players[playerId],
+        inactive: false,
+      });
+      this.props.setCurrentPlayer(playerId);
+    }
+
     // Generic event handlers
     this.props.socket.on('event', data => {
       if (data.type === 'start') {
@@ -39,7 +57,7 @@ class LetsDrink extends Component {
   }
 
   handleAddPlayer(e, playerName) {
-    e.preventDefault();
+    e && e.preventDefault();
     // Add player data to firebase (through redux)
     this.props.addPlayer(this.props.gameData.gameCode, {
       name: playerName || 'Unknown player',

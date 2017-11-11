@@ -15,6 +15,7 @@ import {
   updatePlayerData,
   currentPlayer,
   playerDataLoaded,
+  addPlayerSuccess,
 } from './../../store/players';
 import { speak } from './../../store/audio';
 
@@ -112,6 +113,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(updatePlayerData(gameCode, playerId, playerData)),
     updateGameData: (gameCode, gameData) =>
       dispatch(updateGameData(gameCode, gameData)),
+    setCurrentPlayer: playerId => dispatch(addPlayerSuccess(playerId)),
   };
 }
 
