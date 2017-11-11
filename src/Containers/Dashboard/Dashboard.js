@@ -65,6 +65,30 @@ class Dashboard extends React.Component {
       <AnimatedScreen>
         <HeaderBar title="TVPARTY.IO" subTitle="Bring your friends!" />
 
+        <Block top={2}>
+          <Form onSubmit={this.handleJoinGame}>
+            <Block top={0.5} left={0.5} right={0.5}>
+              <Input
+                required
+                placeholder="Enter code (4 letters)"
+                value={gameCode}
+                onChange={({ target }) => {
+                  this.handleChange('gameCode', target.value);
+                }}
+              />
+            </Block>
+            <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
+              <Button type="submit" disabled={gameCode.length !== 4}>
+                Join Game!
+              </Button>
+            </Block>
+          </Form>
+        </Block>
+
+        <Block top={1} align="center">
+          <p>– OR –</p>
+        </Block>
+
         <Block top={1}>
           <p>Choose a game:</p>
         </Block>
@@ -81,28 +105,6 @@ class Dashboard extends React.Component {
         <Block top={1}>
           <Button onClick={() => this.startNewGame()}>Start new game</Button>
         </Block>
-
-        <Block top={1} bottom={1} align="center">
-          <p>– OR –</p>
-        </Block>
-
-        <Form onSubmit={this.handleJoinGame}>
-          <Block top={1} left={0.5} right={0.5}>
-            <Input
-              required
-              placeholder="Enter code (4 letters)"
-              value={gameCode}
-              onChange={({ target }) => {
-                this.handleChange('gameCode', target.value);
-              }}
-            />
-          </Block>
-          <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
-            <Button type="submit" disabled={gameCode.length !== 4}>
-              Join Game!
-            </Button>
-          </Block>
-        </Form>
       </AnimatedScreen>
     );
   }

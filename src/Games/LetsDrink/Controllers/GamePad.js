@@ -47,7 +47,7 @@ class GamePad extends Component {
       type: 'spin',
     });
     (async () => {
-      await delay(3200);
+      await delay(10000);
       this.setState({
         disableSpin: false,
       });
