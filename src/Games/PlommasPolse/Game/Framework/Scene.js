@@ -2,12 +2,14 @@ import * as PIXI from "pixi.js";
 import TWEEN from "@tweenjs/tween.js";
 
 class Scene {
-  constructor(application, gameData, sceneManager) {
+  constructor(application, {gameData, socket, sendEvent}, sceneManager) {
     this.application = application;
     this.stage = new PIXI.Container();
     this.ticker =  new PIXI.ticker.Ticker();
     this.gameData = gameData;
+    this.socket = socket;
     this.sceneManager = sceneManager;
+    this.sendEvent = sendEvent;
   }
 
   start() {
