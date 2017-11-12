@@ -113,6 +113,7 @@ class GamePad extends Component {
     } = this.props.gameData;
 
     const player = players[currentPlayerId];
+    const waitingForPlayer = players[playersTurn];
 
     return (
       <FullScreen>
@@ -152,7 +153,9 @@ class GamePad extends Component {
                       Spin!
                     </Button>
                   ) : (
-                    <Button disabled>Not your turn..</Button>
+                    <Button disabled>
+                      Waiting for {waitingForPlayer.name}
+                    </Button>
                   )}
                 </Block>
               </div>
