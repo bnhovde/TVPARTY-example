@@ -5,10 +5,9 @@
 *
 */
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import { TextBold } from './../../../../Primitives/Text';
-import { H2 } from './../../../../Primitives/H';
 
 const Wrapper = styled.div`
   display: inline-block;
@@ -28,7 +27,7 @@ const Card = styled.div`
   margin-bottom: 2vh;
   transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   transform-origin: left center;
-  transform: scale(${props => (props.active ? '1.5' : '1')});
+  transform: scale(${props => (props.active ? '1.3' : '1')});
 `;
 
 const Indicator = styled.span`

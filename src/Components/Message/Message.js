@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   color: white;
   background: radial-gradient(
     ellipse at center,
-    rgba(0, 0, 0, 0.32) 0%,
+    rgba(0, 0, 0, 0.16) 0%,
     rgba(0, 0, 0, 0) 50%
   );
   z-index: 10;

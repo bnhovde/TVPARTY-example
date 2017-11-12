@@ -3,7 +3,7 @@ import autoBind from 'react-autobind';
 import { Howl } from 'howler';
 
 // Components
-import { FullScreen } from './../../../Primitives/Screen';
+import { FullScreen, SunburstScreen } from './../../../Primitives/Screen';
 import HeaderBar from './../../../Components/HeaderBar';
 import { H2 } from './../../../Primitives/H';
 import Block from './../../../Primitives/Block';
@@ -69,6 +69,7 @@ class SplashScreen extends Component {
     const { players = {}, gameCode = '' } = this.props.gameData;
     return (
       <FullScreen>
+        <SunburstScreen />
         <HeaderBar
           title="Let's drink!"
           subTitle="Score points and become Heino"
@@ -85,9 +86,6 @@ class SplashScreen extends Component {
                 <TextBold>{players[p].name}</TextBold>
               </div>
             ))}
-        </Block>
-        <Block top={2}>
-          <p>Press START once everyone is in!</p>
         </Block>
         <SpinningBeer />
         <HeinoPeeker />

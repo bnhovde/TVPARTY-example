@@ -24,6 +24,7 @@ const shakeAnimation = keyframes`
 `;
 
 const Wrapper = styled.header`
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: space-between;
