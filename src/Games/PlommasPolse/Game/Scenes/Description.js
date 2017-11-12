@@ -19,8 +19,8 @@ class Description extends Scene {
       containers: {},
     };
     this.activeEventListener = () => {
-
     }
+    this.allowInput = false;
   }
 
   setBackground() {
@@ -55,9 +55,9 @@ class Description extends Scene {
 
     let description = `
     Plommas Pølsespisekonkurranse!
-    1. Alle får total 100 pølser hver runde
-    2. Velg hvor mange pølser du vil spise
-    3. Den som spiser flest pølser i en runde får hjerteinfarkt og får ingen poeng
+    1. Alle får total 10 pølser hver runde
+    2. Velg hvor mange pølser du vil spise (1-10)
+    3. Den som spiser flest pølser i en runde får hjerteinfarkt og ingen poeng
     4. Den som har spist flest pølser når spillet er over er Storplomma!`;
 
 
@@ -72,9 +72,10 @@ class Description extends Scene {
   }
 
   setUpEventListener() {
+    this.allowInput = true;
     // Set up event listener
     this.activeEventListener = (event) => {
-      if (event.type === "submitClicked") {
+      if (event.type === "submitClicked" && this.allowInput) {
         let playerName = event.playerName;
         let playerStatusSprite = this.assets.sprites.playerStatuses[playerName];
         playerStatusSprite.texture = PIXI.Texture.fromImage(checked_img);
@@ -115,6 +116,7 @@ class Description extends Scene {
         }
 
         if (ready) {
+          this.allowInput = false;
           window.setTimeout(() => {
             this.sceneManager.changeScene("gameScene");
           }, 500);

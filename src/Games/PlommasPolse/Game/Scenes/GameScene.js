@@ -19,7 +19,7 @@ class GameScene extends Scene {
         let playerName = event.playerName;
 
         let sausageCount = parseInt(event.sausageCount);
-        if (sausageCount >= 0 && sausageCount <= 100) {
+        if (sausageCount >= 1 && sausageCount <= 10) {
           this.roundData[this.currentRound][playerName] = sausageCount;
         }
 
@@ -471,6 +471,10 @@ class GameScene extends Scene {
   }
 
   start() {
+    this.sendEvent({
+      type: 'gameStarted',
+    });
+
     super.start();
     this.initGame();
     this.setBackground();

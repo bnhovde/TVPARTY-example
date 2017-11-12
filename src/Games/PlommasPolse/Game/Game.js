@@ -8,7 +8,7 @@ import theme from "./assets/plonsters.ogg"
 import GameScene from "./Scenes/GameScene";
 
 class Game {
-  constructor(pixiApplication, {gameData}) {
+  constructor(pixiApplication, {gameData, socket, sendEvent}) {
 
     // Setup the animation loop for tweeing.
     function animate(time) {
@@ -20,9 +20,9 @@ class Game {
     this.sceneManager = new SceneManager(pixiApplication);
     this.sceneManager.gameData = gameData;
 
-    this.sceneManager.addScene("splashScreen", new SplashScreen(pixiApplication, gameData, this.sceneManager));
-    this.sceneManager.addScene("description", new Description(pixiApplication, gameData, this.sceneManager));
-    this.sceneManager.addScene("gameScene", new GameScene(pixiApplication, gameData, this.sceneManager));
+    this.sceneManager.addScene("splashScreen", new SplashScreen(pixiApplication, {gameData, socket, sendEvent}, this.sceneManager));
+    this.sceneManager.addScene("description", new Description(pixiApplication, {gameData, socket, sendEvent}, this.sceneManager));
+    this.sceneManager.addScene("gameScene", new GameScene(pixiApplication, {gameData, socket, sendEvent}, this.sceneManager));
     this.sceneManager.changeScene("splashScreen");
 
   }
