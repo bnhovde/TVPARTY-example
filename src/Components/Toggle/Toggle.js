@@ -7,14 +7,16 @@ const { gutter, fontSizes } = variables;
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const ToggleButton = styled.button`
   display: block;
-  margin-right: ${gutter.horizontal / 2}vw;
+  margin: 0 ${gutter.horizontal / 2}vw;
   cursor: pointer;
   border: 0;
   padding: 0;
+  text-transform: uppercase;
   opacity: ${props => (props.active ? '1' : '0.2')};
   transition: opacity 0.3s ease;
 `;
@@ -22,6 +24,7 @@ const ToggleButton = styled.button`
 const Image = styled.img`
   display: block;
   width: 15vw;
+  border-radius: 50%;
   margin-bottom: ${gutter.vertical / 4}vw;
 `;
 

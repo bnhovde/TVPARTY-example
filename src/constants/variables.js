@@ -35,10 +35,15 @@ export default {
       small: '1rem',
       large: '1.5rem',
     },
+    h3: {
+      small: '0.7rem',
+      large: '1.3vw',
+    },
   },
   colors: {
-    primary: '#3FA7D6',
-    secondary: '#00AC65',
+    primary: '#29ABE2',
+    secondary: '#0071BC',
+    secondaryDark: '#0a598e',
     bad: '#e91e63',
     disabled: '#9E9E9E',
     bg: '#f1f1f1',

@@ -16,9 +16,14 @@ const rainbow = keyframes`
 }
 `;
 
+const rotate = keyframes`
+  0% { transform: rotate(0) scale(4); }
+  100% { transform: rotate(360deg) scale(4); }
+`;
+
 const FullScreen = styled.section`
   display: block;
-  padding: ${gutter.horizontal}vw;
+  padding: ${gutter.vertical}vh ${gutter.horizontal}vw;
   background: ${colors.primary};
   min-height: 100vh;
 `;
@@ -44,4 +49,18 @@ const AnimatedScreen = styled.section`
   animation: ${rainbow} 30s ease infinite;
 `;
 
-export { Screen, FullScreen, AnimatedScreen };
+const SunburstScreen = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("${process.env
+    .PUBLIC_URL}/assets/letsDrink/sunburst.svg");
+  background-size: cover;
+  background-position: center;
+  animation: ${rotate} 50s linear infinite;
+  opacity: 0.03;
+`;
+
+export { Screen, FullScreen, AnimatedScreen, SunburstScreen };

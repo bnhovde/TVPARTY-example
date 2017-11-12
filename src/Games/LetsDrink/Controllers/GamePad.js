@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
+import styled from 'styled-components';
 
 // Helpers
 import { delay } from './../../../utilities/helpers';
@@ -11,6 +12,13 @@ import ChatForm from './../../../Components/ChatForm';
 import { H1 } from './../../../Primitives/H';
 import { Button } from './../../../Primitives/Button';
 import Block from './../../../Primitives/Block';
+
+const Avatar = styled.img`
+  display: block;
+  width: 20vw;
+  max-width: 200px;
+  margin: 0 auto;
+`;
 
 class GamePad extends Component {
   constructor(props) {
@@ -68,6 +76,25 @@ class GamePad extends Component {
     });
   }
 
+  findAvatar() {
+    const { playerWithHair, playerWithShades } = this.props.gameData;
+
+    let avatar = 'face';
+    if (playerWithHair === this.props.currentPlayerId) {
+      avatar = 'face-hair';
+    }
+    if (playerWithShades === this.props.currentPlayerId) {
+      avatar = 'face-shades';
+    }
+    if (
+      playerWithHair === this.props.currentPlayerId &&
+      playerWithShades === this.props.currentPlayerId
+    ) {
+      avatar = 'face-shades-hair';
+    }
+    return avatar;
+  }
+
   render() {
     const { playerName, chatMessage } = this.state.fields;
     const {
@@ -76,7 +103,18 @@ class GamePad extends Component {
       playerLoaded,
       onAddPlayer,
     } = this.props;
-    const { screen = 'splash', playersTurn } = this.props.gameData;
+
+    const {
+      screen = 'splash',
+      playersTurn,
+      players = {},
+      playerWithHair,
+      playerWithShades,
+    } = this.props.gameData;
+
+    const player = players[currentPlayerId] || {};
+    const waitingForPlayer = players[playersTurn] || {};
+
     return (
       <FullScreen>
         {playerLoaded ? (
@@ -94,8 +132,17 @@ class GamePad extends Component {
             )}
             {screen === 'game' && (
               <div>
-                <Block top={2}>
-                  <p>Your score: x</p>
+                <Block top={1}>
+                  <Avatar
+                    src={`${process.env
+                      .PUBLIC_URL}/assets/letsDrink/${this.findAvatar()}.svg`}
+                  />
+                </Block>
+                <Block top={1}>
+                  <p>Your cash: {player.points || 0}</p>
+                </Block>
+                <Block top={0.5}>
+                  <p>You've won {player.drinks || 0} drinks</p>
                 </Block>
                 <Block top={1}>
                   {currentPlayerId === playersTurn ? (
@@ -106,7 +153,9 @@ class GamePad extends Component {
                       Spin!
                     </Button>
                   ) : (
-                    <Button disabled>Not your turn..</Button>
+                    <Button disabled>
+                      Waiting for {waitingForPlayer.name}
+                    </Button>
                   )}
                 </Block>
               </div>

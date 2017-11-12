@@ -7,7 +7,8 @@
 
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { H1, H2 } from './../../Primitives/H';
+import { H1 } from './../../Primitives/H';
+import { Text } from './../../Primitives/Text';
 
 const shakeAnimation = keyframes`
   0% { transform: translate(0); }
@@ -24,9 +25,11 @@ const shakeAnimation = keyframes`
 `;
 
 const Wrapper = styled.header`
+  position: relative;
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: ${props => (props.centered ? 'center' : 'space-between')};
+  text-align: ${props => (props.centered ? 'center' : 'left')};
 `;
 
 const Rotater = styled.div`
@@ -35,11 +38,6 @@ const Rotater = styled.div`
 
 const Mover = styled.div`
   animation: ${shakeAnimation} 10s ease infinite;
-`;
-
-const SmallText = styled.span`
-  text-transform: uppercase;
-  font-family: 'Permanent Marker', cursive;
 `;
 
 const Circle = styled.div`
@@ -58,19 +56,24 @@ const CodeText = H1.extend`
 `;
 
 function HeaderBar(props) {
-  const { title = 'game name', gameCode = false, subTitle = 'Hi!' } = props;
+  const {
+    title = 'game name',
+    gameCode = false,
+    subTitle = 'Hi!',
+    centered,
+  } = props;
 
   return (
-    <Wrapper>
+    <Wrapper centered={centered}>
       <Rotater>
-        <SmallText>{subTitle}</SmallText>
+        <Text>{subTitle}</Text>
         <Mover>
           <H1>{title}</H1>
         </Mover>
       </Rotater>
       {gameCode && (
         <Circle>
-          <SmallText>Join with code:</SmallText>
+          <Text>Join with code:</Text>
           <CodeText>{gameCode}</CodeText>
         </Circle>
       )}

@@ -7,7 +7,7 @@ import { items, sliceDegree } from './../constants/spinnerItems';
 import { delay } from './../../../utilities/helpers';
 
 // Components
-import { FullScreen } from './../../../Primitives/Screen';
+import { FullScreen, SunburstScreen } from './../../../Primitives/Screen';
 import HeaderBar from './../../../Components/HeaderBar';
 import Message from './../../../Components/Message';
 import Block from './../../../Primitives/Block';
@@ -61,9 +61,17 @@ class GameScreen extends Component {
     // Set current player
     this.nextPlayer();
 
+    // Socket events
     this.props.socket.on('event', data => {
+      // Spin event
       if (data.type === 'spin') {
         this.spin();
+      }
+
+      // Chat message
+      if (data.type === 'speak') {
+        // Fade the song, then speak
+        this.fadeThenSpeak(data.message);
       }
     });
   }
@@ -74,6 +82,16 @@ class GameScreen extends Component {
 
     // Remove event listeners
     this.props.socket.off('event');
+  }
+
+  fadeThenSpeak(message) {
+    this.sounds.themeSong.fade(1, 0.2, 500);
+    this.sounds.themeSong.once('fade', () => {
+      this.props.speak(message);
+      setTimeout(() => {
+        this.sounds.themeSong.fade(0.2, 1, 500);
+      }, 3000);
+    });
   }
 
   // Change player turn
@@ -109,6 +127,8 @@ class GameScreen extends Component {
     let sound;
     let points = false;
     let drinks = false;
+    let shades = false;
+    let hair = false;
     switch (prize) {
       case '5p':
         sound = 'cashSound';
@@ -123,15 +143,19 @@ class GameScreen extends Component {
         points = 100;
         break;
       case 'beerx1':
-        sound = 'beerSound';
+        sound = 'beerOpenSound';
         drinks = 1;
         break;
       case 'beerx5':
         sound = 'beerSound';
         drinks = 5;
         break;
-      case 'star':
+      case 'hair':
+        hair = true;
+        sound = 'cheer';
+        break;
       case 'shades':
+        shades = true;
         sound = 'cheer';
         break;
       default:
@@ -147,7 +171,7 @@ class GameScreen extends Component {
     if (points) {
       const currentPoints = player.points || 0;
       this.props.updatePlayerData(this.props.gameData.gameCode, playersTurn, {
-        ...players[playersTurn],
+        ...player,
         points: currentPoints + points,
       });
     }
@@ -155,9 +179,33 @@ class GameScreen extends Component {
     if (drinks) {
       const currentDrinks = player.drinks || 0;
       this.props.updatePlayerData(this.props.gameData.gameCode, playersTurn, {
-        ...players[playersTurn],
+        ...player,
         drinks: currentDrinks + drinks,
       });
+    }
+
+    if (shades) {
+      this.props.updateGameData(this.props.gameData.gameCode, {
+        ...this.props.gameData,
+        playerWithShades: playersTurn,
+      });
+      (async () => {
+        await delay(1000);
+        this.fadeThenSpeak(`${player.name} gets the heino shades! Himalaya!`);
+      })();
+    }
+
+    if (hair) {
+      this.props.updateGameData(this.props.gameData.gameCode, {
+        ...this.props.gameData,
+        playerWithHair: playersTurn,
+      });
+      (async () => {
+        await delay(1000);
+        this.fadeThenSpeak(
+          `${player.name} gets the heino hair! Nice and cool!`,
+        );
+      })();
     }
   }
 
@@ -204,10 +252,13 @@ class GameScreen extends Component {
       gameCode = '',
       spinRotation,
       playersTurn,
+      playerWithShades,
+      playerWithHair,
     } = this.props.gameData;
     const { alertData, isSpinning } = this.state;
     return (
       <FullScreen>
+        <SunburstScreen />
         <HeaderBar
           title="Let's drink!"
           subTitle="TVPARTY presents"
@@ -215,9 +266,19 @@ class GameScreen extends Component {
         />
         <Block>
           <Message data={alertData} />
-          <PlayerScores players={players} playersTurn={playersTurn} />
+          <PlayerScores
+            players={players}
+            playersTurn={playersTurn}
+            playerWithShades={playerWithShades}
+            playerWithHair={playerWithHair}
+          />
           <Spinner rotation={spinRotation} />
-          <HeinoFull isSpinning={isSpinning} />
+          <HeinoFull
+            isSpinning={isSpinning}
+            isInLove={
+              playersTurn === playerWithShades || playersTurn === playerWithHair
+            }
+          />
         </Block>
       </FullScreen>
     );

@@ -10,10 +10,11 @@ import styled, { keyframes } from 'styled-components';
 import { items, sliceDegree } from './../../constants/spinnerItems';
 
 const Wrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
+  position: fixed;
+  top: 50%;
+  transform: translateX(-50%) translateY(-40%);
   width: 40%;
+  left: 50%;
 `;
 
 const InnerWrapper = styled.div`
