@@ -112,8 +112,8 @@ class GamePad extends Component {
       playerWithShades,
     } = this.props.gameData;
 
-    const player = players[currentPlayerId];
-    const waitingForPlayer = players[playersTurn];
+    const player = players[currentPlayerId] || {};
+    const waitingForPlayer = players[playersTurn] || {};
 
     return (
       <FullScreen>
