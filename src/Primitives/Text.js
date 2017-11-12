@@ -23,4 +23,15 @@ const Text = styled.p`
   `};
 `;
 
-export { Text, TextBold };
+const LargeText = styled.p`
+  font-family: 'Permanent Marker', cursive;
+  font-size: ${fontSizes.h2.small};
+
+  ${media.teen`
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: ${fontSizes.h2.large};
+  `};
+`;
+
+export { Text, TextBold, LargeText };

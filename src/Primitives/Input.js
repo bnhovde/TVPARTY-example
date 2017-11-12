@@ -11,6 +11,7 @@ const Input = styled.input`
   padding: 0 ${gutter.horizontal / 2}vw;
   line-height: 3rem;
   font-size: ${fontSizes.text.tiny};
+  text-align: ${props => (props.centered ? 'center' : 'left')};
   background: white;
   border: 0;
 `;

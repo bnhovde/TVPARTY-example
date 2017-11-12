@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
-import variables from './../constants/variables';
-
-const { fontSizes, colors, gutter } = variables;
-
 const Form = styled.form`
-  background-color: #dedede;
+  background-color: ${props => (props.transparent ? 'transparent' : '#dedede')};
   color: white;
   will-change: top;
   z-index: 5;

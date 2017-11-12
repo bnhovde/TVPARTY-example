@@ -14,12 +14,13 @@ import games from './../../Games/games';
 
 // Components
 import { Input } from '../../Primitives/Input';
-import { Text } from '../../Primitives/Text';
+import { Text, LargeText } from '../../Primitives/Text';
 import HeaderBar from './../../Components/HeaderBar';
 import Toggle from './../../Components/Toggle';
 import { Button, InlineButton } from './../../Primitives/Button';
 import Form from './../../Primitives/Form';
 import Block from './../../Primitives/Block';
+import { DesktopView, MobileView } from './../../Primitives/View';
 import { FullScreen, SunburstScreen } from './../../Primitives/Screen';
 
 const FlexGrid = styled.div`
@@ -80,7 +81,31 @@ class Dashboard extends React.Component {
         />
 
         <FlexGrid>
-          <div>
+          <MobileView>
+            <Block top={2} align="center">
+              <LargeText>Join a game</LargeText>
+              <Form onSubmit={this.handleJoinGame} transparent>
+                <Block top={1} left={0.5} right={0.5}>
+                  <Input
+                    required
+                    centered
+                    placeholder="ABCD"
+                    value={gameCode}
+                    onChange={({ target }) => {
+                      this.handleChange('gameCode', target.value);
+                    }}
+                  />
+                </Block>
+                <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
+                  <Button type="submit" disabled={gameCode.length !== 4}>
+                    Enter
+                  </Button>
+                </Block>
+              </Form>
+            </Block>
+          </MobileView>
+
+          <DesktopView>
             <Block top={2}>
               <Toggle
                 name="gameType"
@@ -95,33 +120,13 @@ class Dashboard extends React.Component {
                 Start new game
               </InlineButton>
             </Block>
-          </div>
+          </DesktopView>
           <div>
             <Block top={1} align="center">
               <Text>BETA VERSION</Text>
             </Block>
           </div>
         </FlexGrid>
-
-        {/* <Block top={2}>
-          <Form onSubmit={this.handleJoinGame}>
-            <Block top={0.5} left={0.5} right={0.5}>
-              <Input
-                required
-                placeholder="Enter code (4 letters)"
-                value={gameCode}
-                onChange={({ target }) => {
-                  this.handleChange('gameCode', target.value);
-                }}
-              />
-            </Block>
-            <Block top={0.5} bottom={0.5} left={0.5} right={0.5}>
-              <Button type="submit" disabled={gameCode.length !== 4}>
-                Join Game!
-              </Button>
-            </Block>
-          </Form>
-        </Block> */}
       </FullScreen>
     );
   }

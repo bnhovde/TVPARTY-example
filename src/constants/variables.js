@@ -43,6 +43,7 @@ export default {
   colors: {
     primary: '#29ABE2',
     secondary: '#0071BC',
+    secondaryDark: '#0a598e',
     bad: '#e91e63',
     disabled: '#9E9E9E',
     bg: '#f1f1f1',

@@ -15,7 +15,12 @@ const Button = styled.button`
   background-color: ${props => (props.bad ? colors.bad : colors.secondary)};
   border: 0;
   box-shadow: 7px 7px black;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${colors.secondaryDark};
+  }
 
   &:disabled {
     background-color: ${colors.disabled};
