@@ -31,6 +31,7 @@ isHost          - (Bool)    True if host, false if player
 gameData        - (Object)  All game data (real-time)
 gameCode        - (String)  4-digit game code
 currentPlayer   - (Object)  Current player data
+currentPlayerId - (String)  Current player id
 socket          - (Object)  Socket.io object (for attaching event listeners)
 ```
 
@@ -41,18 +42,18 @@ Events:
 Post updates to firebase
 
 #### Parameters
-- path (String) gameCode to modify
-- data (Object) Data to store (replaces old data)
+- gameCode (String) 4-digit code of game to modify
+- data (Object) Data object (replaces old data)
 
 
-### `updatePlayerData(gameCode, playerId, playerData)`
+### `updatePlayerData(gameCode, playerId, data)`
 
 Post updates to firebase
 
 #### Parameters
-- path (String) gameCode to modify
-- path (String) playerId to modify
-- data (Object) Data to store (replaces old data)
+- gameCode (String) 4-digit code of game to modify
+- playerId (String) playerId to modify
+- data (Object) Data object (replaces old data)
 
 
 ### `sendEvent(data)`
