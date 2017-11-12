@@ -2,6 +2,7 @@ import React from 'react';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
+import styled from 'styled-components';
 
 // Redux
 import { speak } from './../../store/audio';
@@ -13,13 +14,21 @@ import games from './../../Games/games';
 
 // Components
 import { Input } from '../../Primitives/Input';
+import { Text } from '../../Primitives/Text';
 import HeaderBar from './../../Components/HeaderBar';
 import Toggle from './../../Components/Toggle';
-import { H1 } from './../../Primitives/H';
-import { Button } from './../../Primitives/Button';
+import { Button, InlineButton } from './../../Primitives/Button';
 import Form from './../../Primitives/Form';
 import Block from './../../Primitives/Block';
-import { AnimatedScreen } from './../../Primitives/Screen';
+import { FullScreen, SunburstScreen } from './../../Primitives/Screen';
+
+const FlexGrid = styled.div`
+  position: relative;
+  display: flex;
+  height: 75vh;
+  justify-content: space-around;
+  flex-direction: column;
+`;
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -62,10 +71,39 @@ class Dashboard extends React.Component {
     const { gameCode, gameType } = this.state.fields;
 
     return (
-      <AnimatedScreen>
-        <HeaderBar title="TVPARTY.IO" subTitle="Bring your friends!" />
+      <FullScreen>
+        <SunburstScreen />
+        <HeaderBar
+          title="TVPARTY"
+          subTitle="Join the party at tvparty.io"
+          centered
+        />
 
-        <Block top={2}>
+        <FlexGrid>
+          <div>
+            <Block top={2}>
+              <Toggle
+                name="gameType"
+                items={games}
+                selected={gameType}
+                onChange={this.handleChange}
+              />
+            </Block>
+
+            <Block top={2} align="center">
+              <InlineButton onClick={() => this.startNewGame()}>
+                Start new game
+              </InlineButton>
+            </Block>
+          </div>
+          <div>
+            <Block top={1} align="center">
+              <Text>BETA VERSION</Text>
+            </Block>
+          </div>
+        </FlexGrid>
+
+        {/* <Block top={2}>
           <Form onSubmit={this.handleJoinGame}>
             <Block top={0.5} left={0.5} right={0.5}>
               <Input
@@ -83,29 +121,8 @@ class Dashboard extends React.Component {
               </Button>
             </Block>
           </Form>
-        </Block>
-
-        <Block top={1} align="center">
-          <p>– OR –</p>
-        </Block>
-
-        <Block top={1}>
-          <p>Choose a game:</p>
-        </Block>
-
-        <Block top={1}>
-          <Toggle
-            name="gameType"
-            items={games}
-            selected={gameType}
-            onChange={this.handleChange}
-          />
-        </Block>
-
-        <Block top={1}>
-          <Button onClick={() => this.startNewGame()}>Start new game</Button>
-        </Block>
-      </AnimatedScreen>
+        </Block> */}
+      </FullScreen>
     );
   }
 }

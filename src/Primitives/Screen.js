@@ -23,7 +23,7 @@ const rotate = keyframes`
 
 const FullScreen = styled.section`
   display: block;
-  padding: ${gutter.horizontal}vw;
+  padding: ${gutter.vertical}vh ${gutter.horizontal}vw;
   background: ${colors.primary};
   min-height: 100vh;
 `;

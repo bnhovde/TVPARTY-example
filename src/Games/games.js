@@ -8,19 +8,19 @@ export default [
     active: true,
   },
   {
-    id: 'exampleGame',
-    main: 'ExampleGame',
-    name: 'Example game',
-    assets: 'exampleGame',
-    logo: 'logo.svg',
-    active: true,
-  },
-  {
     id: 'plommasPolse',
     main: 'PlommasPolse',
     name: 'Plommas Pølse',
     assets: 'plommasPolse',
     logo: 'logo.png',
+    active: true,
+  },
+  {
+    id: 'exampleGame',
+    main: 'ExampleGame',
+    name: 'Example game',
+    assets: 'exampleGame',
+    logo: 'logo.svg',
     active: true,
   },
 ];

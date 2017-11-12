@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import variables from './../constants/variables';
 
-const { colors, fontSizes } = variables;
+const { colors, gutter, fontSizes } = variables;
 
 const Button = styled.button`
   display: block;
@@ -14,6 +14,7 @@ const Button = styled.button`
   color: white;
   background-color: ${props => (props.bad ? colors.bad : colors.secondary)};
   border: 0;
+  box-shadow: 7px 7px black;
   transition: all 0.3s ease;
 
   &:disabled {
@@ -21,4 +22,11 @@ const Button = styled.button`
   }
 `;
 
-export { Button };
+// We're extending Button with some extra styles
+const InlineButton = Button.extend`
+  display: inline-block;
+  width: auto;
+  padding: 0 ${gutter.horizontal}vw;
+`;
+
+export { Button, InlineButton };
