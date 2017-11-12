@@ -23,4 +23,12 @@ export default [
     logo: 'logo.png',
     active: true,
   },
+  {
+    id: 'karamboKaracho',
+    main: 'KarambaKaracho',
+    name: 'Karambo Karacho!',
+    assets: 'karamboKaracho',
+    logo: 'logo.png',
+    active: true,
+  },
 ];
