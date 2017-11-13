@@ -57,8 +57,6 @@ class KarambaKaracho extends Component {
   }
 
   render() {
-    return <GameScreen {...this.props}/>;
-
     const {
       isHost
     } = this.props;
