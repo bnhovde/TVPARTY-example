@@ -33,12 +33,11 @@ class GamePad extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const { playerName, sausageCount } = this.state.fields;
+    const { playerName } = this.state.fields;
 
     this.props.sendEvent({
       type: 'submitClicked',
       playerName: playerName,
-      sausageCount: sausageCount,
     });
   }
 
@@ -65,23 +64,8 @@ class GamePad extends Component {
   }
 
   render() {
-    const { playerName, sausageCount } = this.state.fields;
+    const { playerName } = this.state.fields;
     const { currentPlayer, playerLoaded, onAddPlayer } = this.props;
-
-    // Has game started
-    let inputJsx = null;
-    if(playerLoaded && this.state.gameStarted) {
-      inputJsx = (
-        <Input
-          required
-          placeholder="Antall pølser"
-          value={sausageCount}
-          onChange={({ target }) => {
-            this.handleChange('sausageCount', target.value);
-          }}
-        />
-      );
-    }
 
     return (
       <FullScreen>
@@ -94,12 +78,8 @@ class GamePad extends Component {
             <Block top={2}>
               <Form>
                 <Screen>
-                  <H1>Spis pølser!</H1>
-                  <Block top={2}>
-                    {inputJsx}
-                  </Block>
                   <Block top={1}>
-                    <Button onClick={e => this.onSubmit(e, sausageCount)}>Go!</Button>
+                    <Button onClick={e => this.onSubmit(e)}>Go!</Button>
                   </Block>
                 </Screen>
               </Form>
@@ -110,6 +90,7 @@ class GamePad extends Component {
             playerName={playerName}
             onChange={this.handleChange}
             onSubmit={e => onAddPlayer(e, playerName)}
+            
           />
         )}
       </FullScreen>

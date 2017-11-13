@@ -2,18 +2,14 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Alcometer.css';
 
-class Alcometer extends Component {
-  render() {
-    const {} = this.props;
-
+const Alcometer = ({percentage}) => {
     return (
         <div className="Alcometer">
-          <div style={{minWidth: this.props.percentage + "%"}} className="meter"/>
+          <div style={{minWidth: percentage + "%"}} className="meter"/>
           <img src={`${process.env.PUBLIC_URL}/assets/karambaKaracho/alkohol2.png`}/>
         </div>
     );
-  }
-}
+};
 
 Alcometer.propTypes = {
   percentage: PropTypes.number,

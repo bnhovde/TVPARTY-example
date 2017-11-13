@@ -3,23 +3,34 @@ import PropTypes from 'prop-types';
 import './KarambaKaracho.css';
 import GamePad from "./GamePad";
 import GameScreen from "./GameScreen";
+import { Howl } from 'howler';
+import StartScreen from "./StartScreen";
 
 class KarambaKaracho extends Component {
   constructor(props) {
     super(props);
     this.handleAddPlayer = this.handleAddPlayer.bind(this);
+    this.allPlayersReady = this.allPlayersReady.bind(this);
 
     this.state = {
       allPlayersReady: false,
+      gameData: null,
+    };
+
+    if(props.isHost) {
+      new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/karambaKaracho/karambakaracho.ogg`],
+        loop: true,
+      }).play();
     }
   }
+
   componentDidMount() {
     const {
       isHost,
       gameData,
     } = this.props;
   }
-
 
   handleAddPlayer(e, playerName) {
     e.preventDefault();
@@ -37,22 +48,38 @@ class KarambaKaracho extends Component {
       gameData,
       isHost
     } = newProps;
+  }
 
-    if(this.game && isHost) {
-      this.game.newGameData(gameData);
-    }
+  allPlayersReady() {
+    this.setState({
+      allPlayersReady: true,
+    })
   }
 
   render() {
+    return <GameScreen {...this.props}/>;
+
     const {
       isHost
     } = this.props;
 
-    if(isHost) {
-      return <GameScreen {...this.props}/>;
-    } else {
-      return(
-          <GamePad {...this.props} onAddPlayer={this.handleAddPlayer} />
+    if (isHost) {
+      if (!this.state.allPlayersReady) {
+        return (
+            <StartScreen
+                handlePlayersReady={this.allPlayersReady}
+                gameData={this.props.gameData}
+                socket={this.props.socket}
+            />
+        );
+      }
+      else {
+        return <GameScreen {...this.props}/>;
+      }
+    }
+    else {
+      return (
+          <GamePad {...this.props} onAddPlayer={this.handleAddPlayer}/>
       );
     }
   }
@@ -65,7 +92,6 @@ KarambaKaracho.propTypes = {
   socket: PropTypes.object,
 };
 
-KarambaKaracho.defaultProps = {
-};
+KarambaKaracho.defaultProps = {};
 
 export default KarambaKaracho;
