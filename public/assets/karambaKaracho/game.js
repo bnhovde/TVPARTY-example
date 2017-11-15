@@ -196,7 +196,7 @@ function render() {
 
 // TVPARTY events and data
 window.newEvent = (event) => {
-  userPlatform.moving_platform.body.velocity.x = -100;
+  userPlatform.moving_platform.body.velocity.x = -(event.powerLevel*40);
 };
 
 window.register = (scoreCallBack) => {
