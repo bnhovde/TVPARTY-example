@@ -12,6 +12,11 @@ const TextBold = styled.span`
   color: white;
 `;
 
+const TextBlack = styled.p`
+  font-family: 'Permanent Marker', cursive;
+  color: black;
+`;
+
 const Text = styled.p`
   font-family: 'Permanent Marker', cursive;
   font-size: ${fontSizes.h3.small};
@@ -34,4 +39,4 @@ const LargeText = styled.p`
   `};
 `;
 
-export { Text, TextBold, LargeText };
+export { Text, TextBold, TextBlack, LargeText };

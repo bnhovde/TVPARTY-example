@@ -14,19 +14,21 @@ const Wrapper = styled.div`
 const Arrow = styled.div`
   position: absolute;
   top: 50%;
-  right: ${gutter.horizontal / 2}vw;
+  right: ${gutter.horizontal}vw;
+  color: black;
   transform: translateY(-50%);
 `;
 
 const SelectEl = styled.select`
   width: 100%;
   line-height: 3rem;
-  padding: 0 ${gutter.horizontal / 2}vw;
+  padding: 0 ${gutter.horizontal}vw;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   border: 0;
   border-radius: 0;
+  color: black;
   -webkit-appearance: none;
 `;
 
@@ -38,6 +40,7 @@ function Select(props) {
       <Arrow>&darr;</Arrow>
       <SelectEl
         value={selected}
+        name={name}
         onChange={({ target }) => {
           onChange(name, target.value);
         }}

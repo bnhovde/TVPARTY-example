@@ -43,6 +43,9 @@ class GameScreen extends Component {
       cheer: new Howl({
         src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/cheer.wav`],
       }),
+      scream: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/scream.wav`],
+      }),
       beerSound: new Howl({
         src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/beer.m4a`],
       }),
@@ -68,6 +71,11 @@ class GameScreen extends Component {
         this.spin();
       }
 
+      // Sabotage event
+      if (data.type === 'sabotage') {
+        this.handleSabotage(data.details);
+      }
+
       // Chat message
       if (data.type === 'speak') {
         // Fade the song, then speak
@@ -82,6 +90,30 @@ class GameScreen extends Component {
 
     // Remove event listeners
     this.props.socket.off('event');
+  }
+
+  handleSabotage(details) {
+    // Someone has been sabotaged!
+    const targetPlayerId = details.targetId;
+    const targetPlayerData = this.props.gameData.players[targetPlayerId];
+    const sendingPlayerId = details.sendingId;
+    const sendingPlayerData = this.props.gameData.players[sendingPlayerId];
+
+    // Set target as sabotaged
+    this.props.updatePlayerData(this.props.gameData.gameCode, targetPlayerId, {
+      ...targetPlayerData,
+      isSabotaged: true,
+    });
+
+    // Take points off sabotaging player
+    const currentPoints = sendingPlayerData.points || 0;
+    this.props.updatePlayerData(this.props.gameData.gameCode, sendingPlayerId, {
+      ...sendingPlayerData,
+      points: currentPoints - 5,
+    });
+
+    // Play sound
+    this.sounds.scream.play();
   }
 
   fadeThenSpeak(message) {
@@ -129,33 +161,41 @@ class GameScreen extends Component {
     let drinks = false;
     let shades = false;
     let hair = false;
+    let prizeText = '';
     switch (prize) {
       case '5p':
         sound = 'cashSound';
         points = 5;
+        prizeText = '5 points';
         break;
       case '25p':
         sound = 'cashSound';
         points = 25;
+        prizeText = '25 points';
         break;
       case '100p':
         sound = 'cashSound';
         points = 100;
+        prizeText = '100 points';
         break;
       case 'beerx1':
         sound = 'beerOpenSound';
         drinks = 1;
+        prizeText = '1 beer';
         break;
       case 'beerx5':
         sound = 'beerSound';
         drinks = 5;
+        prizeText = '5 beers';
         break;
       case 'hair':
         hair = true;
+        prizeText = 'the Heino hair';
         sound = 'cheer';
         break;
       case 'shades':
         shades = true;
+        prizeText = 'the Heino shades';
         sound = 'cheer';
         break;
       default:
@@ -166,7 +206,7 @@ class GameScreen extends Component {
     // Award prize
     const { players, playersTurn } = this.props.gameData;
     const player = players[playersTurn];
-    this.notify(`${player.name} wins ${prize}`);
+    this.notify(`${player.name} wins ${prizeText}`);
 
     if (points) {
       const currentPoints = player.points || 0;

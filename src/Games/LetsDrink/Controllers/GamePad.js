@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import styled from 'styled-components';
+import { Howl } from 'howler';
 
 // Helpers
 import { delay } from './../../../utilities/helpers';
@@ -9,9 +10,12 @@ import { delay } from './../../../utilities/helpers';
 import { FullScreen } from './../../../Primitives/Screen';
 import JoinGameForm from './../../../Components/JoinGameForm';
 import ChatForm from './../../../Components/ChatForm';
+import ShopForm from './../Components/ShopForm';
+import Drawer from './../../../Components/Drawer';
 import { H1 } from './../../../Primitives/H';
 import { Button } from './../../../Primitives/Button';
 import Block from './../../../Primitives/Block';
+import { LargeText } from '../../../Primitives/Text';
 
 const Avatar = styled.img`
   display: block;
@@ -25,10 +29,21 @@ class GamePad extends Component {
     super(props);
     autoBind(this);
     this.state = {
+      chatDrawerOpen: false,
+      shopDrawerOpen: false,
       fields: {
         disableSpin: false,
         userName: '',
       },
+    };
+  }
+
+  componentDidMount() {
+    // Define sounds
+    this.sounds = {
+      buy: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/buy.wav`],
+      }),
     };
   }
 
@@ -44,6 +59,29 @@ class GamePad extends Component {
     this.props.sendEvent({
       type: 'start',
     });
+  }
+
+  handleToggleChat() {
+    this.setState({
+      chatDrawerOpen: !this.state.chatDrawerOpen,
+    });
+  }
+
+  handleToggleShop() {
+    this.setState({
+      shopDrawerOpen: !this.state.shopDrawerOpen,
+    });
+  }
+
+  handleSabotagePlayer(targetId) {
+    this.props.sendEvent({
+      type: 'sabotage',
+      details: {
+        targetId,
+        sendingId: this.props.currentPlayerId,
+      },
+    });
+    this.sounds.buy.play();
   }
 
   handleSpin() {
@@ -97,6 +135,7 @@ class GamePad extends Component {
 
   render() {
     const { playerName, chatMessage } = this.state.fields;
+    const { selectedPlayerForSabotage } = this.state;
     const {
       currentPlayer,
       currentPlayerId,
@@ -158,15 +197,53 @@ class GamePad extends Component {
                     </Button>
                   )}
                 </Block>
+                <Block top={1}>
+                  <Button
+                    disabled={this.state.disableSpin}
+                    onClick={this.handleToggleShop}
+                  >
+                    Shop
+                  </Button>
+                </Block>
+                <Block top={1}>
+                  <Button onClick={this.handleToggleChat}>Chat</Button>
+                </Block>
               </div>
             )}
-            <Block top={1}>
-              <ChatForm
-                chatMessage={chatMessage}
-                onChange={this.handleChange}
-                onSubmit={this.handleSendMessage}
-              />
-            </Block>
+
+            <Drawer visible={this.state.chatDrawerOpen}>
+              <Block top={1} left={1} right={1}>
+                <H1>Chat</H1>
+              </Block>
+              <Block top={1} left={1} right={1}>
+                <ChatForm
+                  chatMessage={chatMessage}
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSendMessage}
+                />
+              </Block>
+              <Block top={1} left={1} right={1}>
+                <Button onClick={this.handleToggleChat}>Close chat</Button>
+              </Block>
+            </Drawer>
+
+            <Drawer visible={this.state.shopDrawerOpen}>
+              <Block top={1} left={1} right={1}>
+                <H1>Shop</H1>
+              </Block>
+              <Block top={1} left={1} right={1}>
+                <ShopForm
+                  points={player.points || 0}
+                  onShop={this.handleSendMessage}
+                  players={players}
+                  currentPlayerId={currentPlayerId}
+                  onSabotagePlayer={this.handleSabotagePlayer}
+                />
+              </Block>
+              <Block top={1} left={1} right={1}>
+                <Button onClick={this.handleToggleShop}>Close shop</Button>
+              </Block>
+            </Drawer>
           </div>
         ) : (
           <JoinGameForm

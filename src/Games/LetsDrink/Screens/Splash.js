@@ -71,7 +71,7 @@ class SplashScreen extends Component {
       <FullScreen>
         <SunburstScreen />
         <HeaderBar
-          title="Let's drink!"
+          title="Let's Drink!"
           subTitle="Score points and become Heino"
           gameCode={gameCode}
         />

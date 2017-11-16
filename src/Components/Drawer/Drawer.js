@@ -16,7 +16,7 @@ const DrawerWrapper = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: ${colors.primary};
+  background-color: ${colors.secondaryDark};
   color: white;
   z-index: 10;
   transform: translateY(${props => (props.visible ? '0%' : '100%')});

@@ -36,7 +36,7 @@ export default {
       large: '1.5rem',
     },
     h3: {
-      small: '0.7rem',
+      small: '0.9rem',
       large: '1.3vw',
     },
   },
