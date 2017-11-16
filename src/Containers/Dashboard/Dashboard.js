@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
                     placeholder="ABCD"
                     value={gameCode}
                     onChange={({ target }) => {
-                      this.handleChange('gameCode', target.value);
+                      this.handleChange('gameCode', target.value.toUpperCase());
                     }}
                   />
                 </Block>

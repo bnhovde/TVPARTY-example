@@ -68,9 +68,6 @@ class GameScreen extends Component {
     this.sounds.cheer.play();
     this.sounds.themeSong.play();
 
-    // Set current player
-    this.nextPlayer();
-
     // Socket events
     this.props.socket.on('event', data => {
       // Spin event
@@ -94,6 +91,12 @@ class GameScreen extends Component {
         this.fadeThenSpeak(data.message);
       }
     });
+
+    (async () => {
+      await delay(3000);
+      // Set current player
+      this.nextPlayer();
+    })();
   }
 
   componentWillUnmount() {

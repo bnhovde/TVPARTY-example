@@ -40,6 +40,21 @@ class GameOverScreen extends Component {
     };
     this.sounds.cheer.play();
     this.sounds.themeSong.play();
+
+    (async () => {
+      await delay(2000);
+      this.sounds.themeSong.fade(1, 0.2, 500);
+      this.sounds.themeSong.once('fade', () => {
+        const { winningPlayerId, players } = this.props.gameData;
+        const winner = players[winningPlayerId] || {};
+        this.props.speak(
+          `${winner.name} has become heino, nice, tight, himalaya!`,
+        );
+        setTimeout(() => {
+          this.sounds.themeSong.fade(0.2, 1, 500);
+        }, 3000);
+      });
+    })();
   }
 
   componentWillUnmount() {
