@@ -96,7 +96,9 @@ class GamePad extends Component {
               <Form>
                 <Screen>
                   <H1>Spis pølser!</H1>
-                  <Block top={2}>{inputJsx}</Block>
+                  <Block top={2}>
+                    {inputJsx}
+                  </Block>
                   <Block top={1}>
                     <Button onClick={e => this.onSubmit(e, sausageCount)}>Go!</Button>
                   </Block>
