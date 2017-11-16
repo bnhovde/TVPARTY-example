@@ -52,32 +52,46 @@ class ShopForm extends Component {
 
     return (
       <div>
-        <Block bottom={1}>
-          <Text>You have {points} points</Text>
+        <Text>You have {points} points</Text>
+        <Block top={1}>
+          <Wrapper>
+            <Screen>
+              <Block>
+                <TextBlack>Sabotage player (50 points)</TextBlack>
+              </Block>
+              <Block top={0.5}>
+                <Select
+                  name="sabotageSelect"
+                  items={playerItems}
+                  onChange={this.handleChangeSabotagePlayer}
+                  selected={this.state.selectedPlayerForSabotage}
+                />
+              </Block>
+              <Block top={0.5}>
+                <Button
+                  onClick={this.handleSabotagePlayer}
+                  disabled={points < 50}
+                >
+                  Sabotage player
+                </Button>
+              </Block>
+            </Screen>
+          </Wrapper>
         </Block>
-        <Wrapper>
-          <Screen>
-            <Block>
-              <TextBlack>Sabotage player (50 points)</TextBlack>
-            </Block>
-            <Block top={0.5}>
-              <Select
-                name="sabotageSelect"
-                items={playerItems}
-                onChange={this.handleChangeSabotagePlayer}
-                selected={this.state.selectedPlayerForSabotage}
-              />
-            </Block>
-            <Block top={0.5}>
-              <Button
-                onClick={this.handleSabotagePlayer}
-                disabled={points < 50}
-              >
-                Sabotage player
-              </Button>
-            </Block>
-          </Screen>
-        </Wrapper>
+        <Block top={0.5}>
+          <Wrapper>
+            <Screen>
+              <Block>
+                <TextBlack>Heino suit (200 points)</TextBlack>
+              </Block>
+              <Block top={0.5}>
+                <Button onClick={this.handleBuySuit} disabled={points < 200}>
+                  Buy the suit
+                </Button>
+              </Block>
+            </Screen>
+          </Wrapper>
+        </Block>
       </div>
     );
   }

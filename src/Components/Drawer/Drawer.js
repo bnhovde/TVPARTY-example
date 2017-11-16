@@ -19,6 +19,9 @@ const DrawerWrapper = styled.div`
   background-color: ${colors.secondaryDark};
   color: white;
   z-index: 10;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
   transform: translateY(${props => (props.visible ? '0%' : '100%')});
   transition: transform 0.2s ease;
 `;
