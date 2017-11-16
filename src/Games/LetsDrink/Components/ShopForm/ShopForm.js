@@ -58,7 +58,7 @@ class ShopForm extends Component {
         <Wrapper>
           <Screen>
             <Block>
-              <TextBlack>Sabotage player (5 points)</TextBlack>
+              <TextBlack>Sabotage player (50 points)</TextBlack>
             </Block>
             <Block top={0.5}>
               <Select
@@ -69,7 +69,10 @@ class ShopForm extends Component {
               />
             </Block>
             <Block top={0.5}>
-              <Button onClick={this.handleSabotagePlayer} disabled={points < 5}>
+              <Button
+                onClick={this.handleSabotagePlayer}
+                disabled={points < 50}
+              >
                 Sabotage player
               </Button>
             </Block>

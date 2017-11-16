@@ -3,7 +3,11 @@ import autoBind from 'react-autobind';
 import { Howl } from 'howler';
 
 // Helpers
-import { items, sliceDegree } from './../constants/spinnerItems';
+import {
+  items,
+  sabotagedItems,
+  sliceDegree,
+} from './../constants/spinnerItems';
 import { delay } from './../../../utilities/helpers';
 
 // Components
@@ -109,7 +113,7 @@ class GameScreen extends Component {
     const currentPoints = sendingPlayerData.points || 0;
     this.props.updatePlayerData(this.props.gameData.gameCode, sendingPlayerId, {
       ...sendingPlayerData,
-      points: currentPoints - 5,
+      points: currentPoints - 50,
     });
 
     // Play sound
@@ -247,6 +251,21 @@ class GameScreen extends Component {
         );
       })();
     }
+
+    // Remove any temporary modifiers
+    (async () => {
+      await delay(5000);
+      this.resetModifiers(playersTurn);
+    })();
+  }
+
+  resetModifiers(playerId) {
+    const { players } = this.props.gameData;
+    const player = players[playerId];
+    this.props.updatePlayerData(this.props.gameData.gameCode, playerId, {
+      ...player,
+      isSabotaged: false,
+    });
   }
 
   spin() {
@@ -265,7 +284,13 @@ class GameScreen extends Component {
     }
     const prizeIndex = Math.round(degree / sliceDegree) + 1;
     const index = prizeIndex === 17 ? 15 : prizeIndex;
-    const prize = items[items.length - index];
+
+    // Check if player is sabotaged
+    const { isSabotaged } = this.props.gameData.players[
+      this.props.gameData.playersTurn
+    ];
+    const itemsToUse = isSabotaged ? sabotagedItems : items;
+    const prize = itemsToUse[items.length - index];
 
     // Stop heino animation
     (async () => {
@@ -312,7 +337,12 @@ class GameScreen extends Component {
             playerWithShades={playerWithShades}
             playerWithHair={playerWithHair}
           />
-          <Spinner rotation={spinRotation} />
+          <Spinner
+            rotation={spinRotation}
+            useSabotaged={
+              players[playersTurn] && players[playersTurn].isSabotaged
+            }
+          />
           <HeinoFull
             isSpinning={isSpinning}
             isInLove={

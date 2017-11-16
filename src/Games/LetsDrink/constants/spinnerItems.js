@@ -17,6 +17,25 @@ const items = [
   'shades',
 ];
 
+const sabotagedItems = [
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+  'beerx5',
+];
+
 const sliceDegree = 22.5;
 
-export { items, sliceDegree };
+export { items, sabotagedItems, sliceDegree };

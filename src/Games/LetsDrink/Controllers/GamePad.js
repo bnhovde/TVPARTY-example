@@ -199,7 +199,7 @@ class GamePad extends Component {
                 </Block>
                 <Block top={1}>
                   <Button
-                    disabled={this.state.disableSpin}
+                    disabled={currentPlayerId !== playersTurn}
                     onClick={this.handleToggleShop}
                   >
                     Shop

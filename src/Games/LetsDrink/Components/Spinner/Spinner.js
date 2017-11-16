@@ -7,7 +7,11 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { items, sliceDegree } from './../../constants/spinnerItems';
+import {
+  items,
+  sabotagedItems,
+  sliceDegree,
+} from './../../constants/spinnerItems';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -52,12 +56,13 @@ const Slice = styled.div`
 `;
 
 function Spinner(props) {
-  const { rotation = 0 } = props;
+  const { rotation = 0, useSabotaged = false } = props;
+  const currentItems = useSabotaged ? sabotagedItems : items;
   return (
     <Wrapper>
       <Indicator src={`${process.env.PUBLIC_URL}/assets/letsDrink/arrow.svg`} />
       <InnerWrapper style={{ transform: `rotate(${rotation}deg)` }}>
-        {items.map((item, i) => (
+        {currentItems.map((item, i) => (
           <Slice key={i} rotation={sliceDegree * (i + 1)}>
             <Icon
               src={`${process.env.PUBLIC_URL}/assets/letsDrink/${item}.svg`}
