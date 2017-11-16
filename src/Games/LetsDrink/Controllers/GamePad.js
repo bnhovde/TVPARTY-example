@@ -92,6 +92,9 @@ class GamePad extends Component {
       },
     });
     this.sounds.buy.play();
+    this.setState({
+      shopDrawerOpen: false,
+    });
   }
 
   handleSpin() {
