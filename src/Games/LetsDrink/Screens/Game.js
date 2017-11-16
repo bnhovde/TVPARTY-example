@@ -50,6 +50,9 @@ class GameScreen extends Component {
       scream: new Howl({
         src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/scream.wav`],
       }),
+      whistle: new Howl({
+        src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/whistle.wav`],
+      }),
       beerSound: new Howl({
         src: [`${process.env.PUBLIC_URL}/assets/letsDrink/sounds/beer.m4a`],
       }),
@@ -78,6 +81,11 @@ class GameScreen extends Component {
       // Sabotage event
       if (data.type === 'sabotage') {
         this.handleSabotage(data.details);
+      }
+
+      // Buy suit event
+      if (data.type === 'buySuit') {
+        this.handleBuySuit(data.details);
       }
 
       // Chat message
@@ -118,6 +126,31 @@ class GameScreen extends Component {
 
     // Play sound
     this.sounds.scream.play();
+  }
+
+  handleBuySuit(details) {
+    // Someone has bought the heino suit
+    const sendingPlayerId = details.sendingId;
+    const sendingPlayerData = this.props.gameData.players[sendingPlayerId];
+
+    // Award suit and take off points
+    const currentPoints = sendingPlayerData.points || 0;
+    this.props.updatePlayerData(this.props.gameData.gameCode, sendingPlayerId, {
+      ...sendingPlayerData,
+      points: currentPoints - 200,
+    });
+
+    // Play sound
+    this.sounds.whistle.play();
+
+    (async () => {
+      await delay(1000);
+      this.props.updateGameData(this.props.gameData.gameCode, {
+        ...this.props.gameData,
+        winningPlayerId: sendingPlayerId,
+        screen: 'gameOver',
+      });
+    })();
   }
 
   fadeThenSpeak(message) {

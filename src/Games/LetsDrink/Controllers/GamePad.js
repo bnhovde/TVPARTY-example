@@ -12,7 +12,7 @@ import JoinGameForm from './../../../Components/JoinGameForm';
 import ChatForm from './../../../Components/ChatForm';
 import ShopForm from './../Components/ShopForm';
 import Drawer from './../../../Components/Drawer';
-import { H1 } from './../../../Primitives/H';
+import { H1, H2 } from './../../../Primitives/H';
 import { Button } from './../../../Primitives/Button';
 import Block from './../../../Primitives/Block';
 import { LargeText } from '../../../Primitives/Text';
@@ -84,6 +84,16 @@ class GamePad extends Component {
     this.sounds.buy.play();
   }
 
+  handleBuySuit() {
+    this.props.sendEvent({
+      type: 'buySuit',
+      details: {
+        sendingId: this.props.currentPlayerId,
+      },
+    });
+    this.sounds.buy.play();
+  }
+
   handleSpin() {
     // Prevent multiple events sent
     this.setState({
@@ -133,6 +143,15 @@ class GamePad extends Component {
     return avatar;
   }
 
+  checkIfCanBuySuit() {
+    const { playerWithHair, playerWithShades } = this.props.gameData;
+
+    return (
+      playerWithHair === this.props.currentPlayerId &&
+      playerWithShades === this.props.currentPlayerId
+    );
+  }
+
   render() {
     const { playerName, chatMessage } = this.state.fields;
     const { selectedPlayerForSabotage } = this.state;
@@ -149,10 +168,12 @@ class GamePad extends Component {
       players = {},
       playerWithHair,
       playerWithShades,
+      winningPlayerId,
     } = this.props.gameData;
 
     const player = players[currentPlayerId] || {};
     const waitingForPlayer = players[playersTurn] || {};
+    const winningPlayer = players[winningPlayerId] || {};
 
     return (
       <FullScreen>
@@ -211,6 +232,21 @@ class GamePad extends Component {
               </div>
             )}
 
+            {screen === 'gameOver' && (
+              <div>
+                <Block top={2}>
+                  <p>Game over!</p>
+                </Block>
+                <Block top={1}>
+                  {currentPlayerId === winningPlayerId ? (
+                    <LargeText>You Won!!!</LargeText>
+                  ) : (
+                    <H2>{winningPlayer.name} won the game!</H2>
+                  )}
+                </Block>
+              </div>
+            )}
+
             <Drawer visible={this.state.chatDrawerOpen}>
               <Block top={1} left={1} right={1}>
                 <H1>Chat</H1>
@@ -236,11 +272,13 @@ class GamePad extends Component {
                   points={player.points || 0}
                   onShop={this.handleSendMessage}
                   players={players}
+                  canBuySuit={this.checkIfCanBuySuit()}
                   currentPlayerId={currentPlayerId}
                   onSabotagePlayer={this.handleSabotagePlayer}
+                  onBuySuit={this.handleBuySuit}
                 />
               </Block>
-              <Block top={1} left={1} right={1}>
+              <Block top={1} left={1} right={1} bottom={1}>
                 <Button onClick={this.handleToggleShop}>Close shop</Button>
               </Block>
             </Drawer>

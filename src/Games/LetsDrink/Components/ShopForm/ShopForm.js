@@ -41,7 +41,13 @@ class ShopForm extends Component {
   }
 
   render() {
-    const { points = 0, players, currentPlayerId } = this.props;
+    const {
+      points = 0,
+      players,
+      currentPlayerId,
+      onBuySuit,
+      canBuySuit,
+    } = this.props;
 
     const playerItems = Object.keys(players).map(id => {
       return {
@@ -83,9 +89,13 @@ class ShopForm extends Component {
             <Screen>
               <Block>
                 <TextBlack>Heino suit (200 points)</TextBlack>
+                <TextBlack>(requires shades &amp; hair)</TextBlack>
               </Block>
               <Block top={0.5}>
-                <Button onClick={this.handleBuySuit} disabled={points < 200}>
+                <Button
+                  onClick={onBuySuit}
+                  disabled={points < 10 || !canBuySuit}
+                >
                   Buy the suit
                 </Button>
               </Block>

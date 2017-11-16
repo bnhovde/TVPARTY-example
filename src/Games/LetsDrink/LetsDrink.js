@@ -7,6 +7,7 @@ import { loadState } from './../../utilities/localstorage';
 // Components
 import SplashScreen from './Screens/Splash';
 import GameScreen from './Screens/Game';
+import GameOverScreen from './Screens/GameOver';
 import GamePad from './Controllers/GamePad';
 
 class LetsDrink extends Component {
@@ -91,6 +92,7 @@ class LetsDrink extends Component {
       <div>
         {screen === 'splash' && <SplashScreen {...this.props} />}
         {screen === 'game' && <GameScreen {...this.props} />}
+        {screen === 'gameOver' && <GameOverScreen {...this.props} />}
       </div>
     );
   }
